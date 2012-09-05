@@ -103,7 +103,6 @@
   (cond 
    ((string= mode-name "C/l") (jorbi-simple-compile-c99))
    ((string= mode-name "Java/l") (jorbi-simple-compile-java))
-   ((string= mode-name "Go") (jorbi-simple-compile-go))
    (t (print "not implemented"))
   )
 )
@@ -127,30 +126,6 @@
   (compile (concat (concat (concat "gcc -std=c99 " buffer-file-name) " -o ")
 		   (car (split-string (car (last (split-string buffer-file-name "/"))) "\\.")))
   )
-)
-
-;;
-;; Simple Go compile
-;;
-(defun jorbi-simple-compile-go()
-  "Compile a single Go Buffer"
-  (interactive)
-  (print "GO IS NOT ADDED TO THE PATH")
-  (compile (concat (concat "go build -o " 
-			   (jorbi-file-name)
-		   ) 
-		   (concat " " buffer-file-name)
-	   )
-  )
-)
-
-;;
-;; Extract filename
-;;
-(defun jorbi-file-name()
-  "Extracts buffer filename\na/b/c/file.txt -> file"
-  (interactive)
-  (car (split-string (car (last (split-string buffer-file-name "/"))) "\\."))
 )
 ;;
 ;; Switch to termainl buffer
