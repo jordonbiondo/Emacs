@@ -19,6 +19,7 @@
       (jorbi-term)
     )
   (jorbi-init-key-sets)
+  (jorbi-add-go-to-path)
 )
 
 
@@ -129,3 +130,15 @@
     ;;(term "/bin/bash")
   )
  )
+
+
+
+(defvar go-bin-dir "/usr/local/go/bin/")
+
+(defun jorbi-add-go-to-path()
+  "Set up the go bin directory\nNeeded because osx has probelems"
+  (interactive)
+  (if (not (string-match go-bin-dir (getenv "PATH")))
+      (setenv "PATH" (concat (concat (getenv "PATH") ":") go-bin-dir))
+  )
+)
