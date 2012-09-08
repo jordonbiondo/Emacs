@@ -8,6 +8,7 @@
 ;; Init
 ;;
 (defun jorbi-init()
+  "Initiliaze My Settings"
   (interactive)
   (tool-bar-mode -1)
   (visual-line-mode t)
@@ -101,11 +102,11 @@
 ;;
 ;; Macros
 ;;
-(fset 'jorbi-doc-comment-macro
-   [?\C-a return ?\C-p tab ?/ ?* return ?* return ?* ?/ ?\C-p ? ])
-
 (fset 'jorbi-el-doc-comment-macro
    [?\C-a return ?\C-p tab ?\; ?\; return ?\; ?\; return ?\; ?\; up ? ])
+
+(fset 'jorbi-doc-comment-macro
+   [?\C-a return ?\C-p tab ?/ ?* return ?  ?* return ?  ?* ?/ ?\C-p ? ])
 
 
 ;;
