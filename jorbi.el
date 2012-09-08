@@ -133,12 +133,21 @@
 
 
 
+;;
+;; Directory for go 
+;;
 (defvar go-bin-dir "/usr/local/go/bin/")
 
+;;
+;; Add Go to PATH
+;;
 (defun jorbi-add-go-to-path()
   "Set up the go bin directory\nNeeded because osx has probelems"
   (interactive)
-  (if (not (string-match go-bin-dir (getenv "PATH")))
+  (if (and (string= system-type "darwin")
+	   (not (string-match go-bin-dir (getenv "PATH")))
+      )
       (setenv "PATH" (concat (concat (getenv "PATH") ":") go-bin-dir))
   )
+  (print "Go is already set up")
 )
