@@ -16,25 +16,17 @@
   (hl-line-mode 1)
   (jorbi-dark)
   (if (is-in-terminal)
-      (jorbi-term)
-    )
+      (jorbi-terminal-settings)
+  )
   (jorbi-init-key-sets)
   (jorbi-add-go-to-path)
 )
 
 
-;;
-;; Is is terminal?
-;;
-(defun is-in-terminal()
-  "Returns t if emacs is running in a terminal"
-  (null (display-graphic-p))
-)
-
 ;; 
 ;; Custom settings for running in terminal
 ;;
-(defun jorbi-term()
+(defun jorbi-terminal-settings()
   "Custom settings for running in terminal"
   (set-face-background 'default "black")
   (hl-line-mode 0)
@@ -72,7 +64,7 @@
   (interactive)
   (indent-according-to-mode)
   (next-line)
-  )
+)
 
 
 ;;
@@ -110,14 +102,6 @@
    [?\C-a return ?\C-p tab ?/ ?* return ?  ?* return ?  ?* ?/ ?\C-p ? ])
 
 
-;;
-;; Extract filename
-;;
-(defun jorbi-file-name()
-  "Extracts buffer filename\na/b/c/file.txt -> file"
-  (interactive)
-  (car (split-string (car (last (split-string buffer-file-name "/"))) "\\."))
-)
 
 ;;
 ;; Switch to termainl buffer
@@ -151,3 +135,5 @@
   )
   (print "Go is already set up")
 )
+
+

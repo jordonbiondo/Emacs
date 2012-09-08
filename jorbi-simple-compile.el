@@ -30,7 +30,7 @@
   "Compile a single C buffer with -std=C99"
   (interactive)
   (compile (concat (concat (concat "gcc -std=c99 " buffer-file-name) " -o ")
-		   (car (split-string (car (last (split-string buffer-file-name "/"))) "\\.")))
+		   (jorbi-buffer-file-name))
   )
 )
 
@@ -42,7 +42,7 @@
   (interactive)
   (print "GO IS NOT ADDED TO THE PATH")
   (compile (concat (concat "go build -o " 
-			   (jorbi-file-name)
+			   (jorbi-buffer-file-name)
 		   ) 
 		   (concat " " buffer-file-name)
 	   )
