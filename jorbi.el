@@ -20,6 +20,7 @@
   )
   (jorbi-init-key-sets)
   (jorbi-add-go-to-path)
+  (jorbi-set-up-path)
 )
 
 
@@ -78,7 +79,7 @@
   (global-set-key (kbd "<C-tab>") 'quick-indent)
   (global-set-key (kbd "C-M-k") 'jorbi-doc-comment-macro)
   (global-set-key (kbd "C-k") 'kill-line)
-  (global-set-key (kbd "C-x t") 'jorbi-switch-to-term)
+  (global-set-key (kbd "C-x t") 'jorbi-switch-to-shell)
 )
 
 ;;
@@ -106,11 +107,11 @@
 ;;
 ;; Switch to termainl buffer
 ;;
-(defun jorbi-switch-to-term()
-  "Switches to the terminal buffer if it exists"
+(defun jorbi-switch-to-shell()
+  "Switches to the shell buffer if it exists"
   (interactive)
-  (if (get-buffer "*terminal*")
-      (switch-to-buffer-other-window "*terminal*")
+  (if (get-buffer "*shell*")
+      (switch-to-buffer-other-window "*shell*")
     ;;(term "/bin/bash")
   )
  )
@@ -137,3 +138,16 @@
 )
 
 
+;;
+;; add /usr/local/bin to path
+;;
+(defun jorbi-set-up-path()
+  (interactive)
+  (if (and (string= system-type "darwin")
+	   (not (string-match "/usr/local/bin" (getenv "PATH")))
+	   )
+      (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+    (print "/usr/local/bin is already set up")
+  )
+  
+)
