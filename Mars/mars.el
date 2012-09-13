@@ -1,6 +1,9 @@
+;;
+;; Mars init
+;;
 (defun mars-init()
-  (interactive)
   "Initialize settings for mars assembly"
+  (interactive)
   (setq asm-comment-char ?#)
   t
 )
@@ -13,7 +16,7 @@
   "Attempt to assemble the current MIPS buffer"
   (interactive)
   (if (eq major-mode 'asm-mode)
-      (let ((command "mars "))
+      (let ((command "mars nc ae1 "))
 	(if (not run)
 	   (setq command (concat command "a "))
 	)
