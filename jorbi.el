@@ -53,10 +53,29 @@
   (set-face-foreground 'font-lock-string-face "#E6DB74")
   (set-face-foreground 'show-paren-match "gray10")
   (set-cursor-color "orange")
+
+
+  ;; Org mode
+  (add-hook 'org-mode-hook 
+	    (lambda() 
+	      (progn
+		(set-face-foreground 'org-todo "#AB7B71")
+		(set-face-foreground 'org-done "#7174AB")
+		)
+	      )
+  )
+
+  (add-hook 'compilation-mode-hook
+	    (lambda()
+	      (progn
+		(set-face-foreground 'compilation-error "red")
+		)
+	      )
+  )
   t
 )
 
-
+				     
 ;;
 ;; Quick Indent.
 ;;
