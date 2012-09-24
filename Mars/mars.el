@@ -1,6 +1,8 @@
 ;;
 ;; Mars init
 ;;
+(require 'jorbi-util)
+
 (defun mars-init()
   "Initialize settings for mars assembly"
   (interactive)
@@ -42,3 +44,5 @@
 ;; Run it
 ;;
 (mars-init)
+
+(provide 'mars)

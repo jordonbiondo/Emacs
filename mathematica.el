@@ -1726,3 +1726,4 @@ Mathematica is a registered trademark of Wolfram Research.
 
   )
 
+(provide 'mathematica)

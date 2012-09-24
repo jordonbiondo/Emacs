@@ -4,6 +4,8 @@
 ;;
 ;;----------------------------------------------
 
+(require 'jorbi-util)
+(require 'jorbi-simple-compile)
 ;;
 ;; Init
 ;;
@@ -93,8 +95,16 @@
 (defun jorbi-init-key-sets()
   (interactive)
   (global-set-key (kbd "C-x l") 'buffer-menu)
-  (global-set-key (kbd "C-,") 'previous-multiframe-window)
-  (global-set-key (kbd "C-.") 'next-multiframe-window)
+  (if (is-in-terminal) 
+      (progn
+	(global-set-key (kbd "C-c <left>") 'previous-multiframe-window)
+	(global-set-key (kbd "C-c <right>") 'next-multiframe-window)
+      )
+    (progn
+        (global-set-key (kbd "C-,") 'previous-multiframe-window)
+	(global-set-key (kbd "C-.") 'next-multiframe-window)
+    )
+  )
   (global-set-key (kbd "<C-tab>") 'quick-indent)
   (global-set-key (kbd "C-M-k") 'jorbi-doc-comment-macro)
   (global-set-key (kbd "C-k") 'kill-line)
@@ -170,3 +180,5 @@
   )
   
 )
+
+(provide 'jorbi)

@@ -37,3 +37,5 @@
   (interactive)
   (head (split-string (head (last (split-string buffer-file-name "/"))) "\\."))
 )
+
+(provide 'jorbi-util)

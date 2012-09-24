@@ -1,4 +1,4 @@
-
+(require 'jorbi-util)
 ;;
 ;; Simple, single file, compiles
 ;;
@@ -48,3 +48,5 @@
 	   )
   )
 )
+
+(provide 'jorbi-simple-compile)
