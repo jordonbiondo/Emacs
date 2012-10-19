@@ -12,16 +12,29 @@
 (defun jorbi-init()
   "Initiliaze My Settings"
   (interactive)
-  (tool-bar-mode -1)
+  ;; no tool bar
+  (tool-bar-mode -1) 
+  ;; no tabs
+  (tabbar-mode -1)
+  ;; word wrap
   (visual-line-mode t)
+  ;; show parenthesis matching
   (show-paren-mode 1)
+  ;; highlight current line
   (hl-line-mode 1)
+  ;; set custom font
+  (jorbi-set-font)
+  ;; init color theme
   (jorbi-dark)
+  ;; custom settings for termacs
   (if (is-in-terminal)
       (jorbi-terminal-settings)
   )
+  ;; key bindings
   (jorbi-init-key-sets)
+  ;; set up go
   (jorbi-add-go-to-path)
+  ;; set up path because osx sucks
   (jorbi-set-up-path)
 )
 
@@ -143,9 +156,23 @@
       (switch-to-buffer-other-window "*shell*")
     ;;(term "/bin/bash")
   )
- )
+)
 
+;;
+;; Set font
+;;
+(defun jorbi-set-font()
+  "Sets the font depeding on the system and editor"
+  (if (and (not (is-in-terminal))
+	   (eq system-type 'darwin)
+      )
+      (set-face-font 'default 
+       "-apple-Source_Code_Pro-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1"
+      )
+  )
+)
 
+(jorbi-set-font)
 
 ;;
 ;; Directory for go 
