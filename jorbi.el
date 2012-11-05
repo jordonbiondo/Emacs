@@ -15,9 +15,11 @@
   ;; no tool bar
   (tool-bar-mode -1) 
   ;; no tabs
-  (tabbar-mode -1)
+  (tabbar-mode nil)
   ;; word wrap
   (visual-line-mode t)
+  ;; no scroll bars
+  (scroll-bar-mode nil)
   ;; show parenthesis matching
   (show-paren-mode 1)
   ;; highlight current line
@@ -172,7 +174,7 @@
   )
 )
 
-(jorbi-set-font)
+
 
 ;;
 ;; Directory for go 
