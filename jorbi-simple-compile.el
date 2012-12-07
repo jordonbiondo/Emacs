@@ -9,6 +9,7 @@
    ((string= mode-name "C/l") (jorbi-simple-compile-c99))
    ((string= mode-name "Java/l") (jorbi-simple-compile-java))
    ((string= mode-name "Go") (jorbi-simple-compile-go))
+   ((string= mode-name "Python") (jorbi-simple-compile-python))
    (t (print "not implemented"))
   )
 )
@@ -21,6 +22,11 @@
   "Compile a single java buffer"
   (interactive)
   (compile (concat "javac " buffer-file-name))
+)
+
+(defun jorbi-simple-compile-python()
+  (interactive)
+  (compile (concat "python " buffer-file-name))
 )
 
 ;;
