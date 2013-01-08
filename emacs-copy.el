@@ -6,35 +6,49 @@
 (require 'cl)
 
 ;; Jorbi
-(add-to-list 'load-path "~/Git/Emacs/")
+;;(add-to-list 'load-path "~/Git/Emacs/")
+
+
+(setq load-path (append load-path '(
+				   "~/Git/Emacs/"
+				   "~/Emacs/"
+				   "~/Git/Emacs/Mars/"
+				   "~/Emacs/Lua-Emacs/"
+				   "~/Emacs/Mathematica/"
+				   "~/Emacs/CSharp"
+				   "~/Emacs/color-theme"
+				   "/usr/local/go/misc/emacs/"
+				   )
+		       )
+)
+;; jordon biondo
 (require 'jorbi)
 
+;; io
+(require 'io-mode)
+
+;; edit serverp
+;;(require 'edit-server) nope
+
 ;; Mars
-(add-to-list 'load-path "~/Git/Emacs/Mars/")
 (require 'mars)
 
 ;; Go
-(add-to-list 'load-path "/usr/local/go/misc/emacs/")
 (require 'go-mode-load)
 (require 'go-mode)
 
 ;; Lua
-(add-to-list 'load-path "~/Emacs/Lua-Emacs")
 (require 'lua-mode)
 
 ;; Mathematica
-(add-to-list 'load-path "~/Emacs/Mathematica")
 (require 'mathematica)
 (setq mathematica-command-line "/usr/local/bin/math")
 
 ;; C#
-(add-to-list 'load-path "~/Emacs/CSharp")
 (require 'csharp-mode)
 
-(add-to-list 'load-path "~/Emacs/color-theme")
+;; Color Theme
 (require 'color-theme);
-
-
 
 ;; initialize personal settings
 (jorbi-init)
