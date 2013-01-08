@@ -169,6 +169,12 @@
       (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
     (print "/usr/local/bin is already set up")
   )
+  (if (and (string= system-type "darwin")
+	   (not (string-match "/sw/bin" (getenv "PATH")))
+	   )
+      (setenv "PATH" (concat (getenv "PATH") ":/sw/bin"))
+    (print "/sw/bin already set up")
+    )
   
 )
 
