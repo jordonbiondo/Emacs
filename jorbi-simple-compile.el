@@ -10,6 +10,7 @@
    ((string= mode-name "Java/l") (jorbi-simple-compile-java))
    ((string= mode-name "Go") (jorbi-simple-compile-go))
    ((string= mode-name "Python") (jorbi-simple-compile-python))
+   ((string= mode-name "Emacs-Lisp") (emacs-lisp-byte-compile))
    (t (print "not implemented"))
   )
 )

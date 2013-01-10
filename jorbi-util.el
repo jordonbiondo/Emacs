@@ -38,4 +38,13 @@
   (head (split-string (head (last (split-string buffer-file-name "/"))) "\\."))
 )
 
+;;
+;; like progn, but only evaluates on a darwin system
+;;
+(defmacro mac-eval (&rest var)
+  (list 'if (list 'string= 'system-type "darwin")
+	(list 'dolist (list 'x (list 'quote var) nil) (list 'eval 'x)))
+)
+;;)
+
 (provide 'jorbi-util)

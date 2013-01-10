@@ -36,10 +36,10 @@
     '((((class color) (background dark))
        (:background "#444444"))
       (((class color) (background light))
-       (:background "#CCCCCC")))
+       (:background "gray14")))
   "Face for stripes.")
 
-(defcustom stripe-max-buffer-size 0
+(defcustom stripe-max-buffer-size 50000
   "Don't add stripes if buffer has more characters than this.
 This is useful, since a large number of overlays can make editing slow.
 Suggested value: 50000
@@ -47,7 +47,7 @@ Set to 0 or nil, if you want stripes no matter the size."
   :group 'stripe-buffer
   :type 'integer)
 
-(defcustom stripe-height 1
+(defcustom stripe-height 3
   "Height of stripes."
   :group 'stripe-buffer
   :type 'integer)
