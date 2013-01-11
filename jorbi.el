@@ -14,13 +14,13 @@
   "Initiliaze My Settings"
   (interactive)
   ;; no tool bar
-  (tool-bar-mode -1) 
+  (turn-off 'tool-bar-mode)
   ;; no tabs
-  (tabbar-mode nil)
+  (turn-off 'tabbar-mode)
   ;; word wrap
   (visual-line-mode t)
   ;; no scroll bars
-  (scroll-bar-mode nil)
+  (turn-off 'scroll-bar-mode)
   ;; show parenthesis matching
   (show-paren-mode 1)
   ;; highlight current line
@@ -82,6 +82,13 @@
 	(global-set-key (kbd "C-.") 'next-multiframe-window)
     )
   )
+  (mac-eval
+   (global-set-key (kbd "C-M-A-<right>") 'enlarge-window-horizontally)
+   (global-set-key (kbd "C-M-A-<left>") 'shrink-window-horizontally)
+   (global-set-key (kbd "C-M-A-<up>") 'enlarge-window)
+   (global-set-key (kbd "C-M-A-<down>") 'shrink-window)
+  )
+
   (global-set-key (kbd "<C-tab>") 'quick-indent)
   (global-set-key (kbd "C-M-k") 'jorbi-doc-comment-macro)
   (global-set-key (kbd "C-k") 'kill-line)

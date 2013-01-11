@@ -21,6 +21,15 @@
   (nth n l)
 )
 
+(defun turn-off(x)
+  (if (fboundp x) 
+      (progn
+	(funcall x -1)
+	(funcall x nil)
+      )
+    )
+)
+
 ;;
 ;; Is is terminal?
 ;;
@@ -45,6 +54,12 @@
   (list 'if (list 'string= 'system-type "darwin")
 	(list 'dolist (list 'x (list 'quote var) nil) (list 'eval 'x)))
 )
+
+(defmacro term-eval (&rest var)
+  (list 'if (list 'is-in-terminal)
+	(list 'dolist (list 'x (list 'quote var) nil) (list 'eval 'x)))
+)
+
 ;;)
 
 (provide 'jorbi-util)
