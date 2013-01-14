@@ -21,13 +21,20 @@
   (nth n l)
 )
 
+;;
+;; Turn off mode
+;;
 (defun turn-off(x)
+  "Turn off a mode, e.g (turn-off tabbar-mode)"
   (if (fboundp x) 
       (progn
 	(funcall x -1)
-	(funcall x nil)
       )
     )
+)
+
+(defmacro jorbi-require(modes)
+  
 )
 
 ;;
@@ -56,6 +63,11 @@
 )
 
 (defmacro term-eval (&rest var)
+  (list 'if (list 'is-in-terminal)
+	(list 'dolist (list 'x (list 'quote var) nil) (list 'eval 'x)))
+)
+
+(defmacro jorbi-require (&rest var)
   (list 'if (list 'is-in-terminal)
 	(list 'dolist (list 'x (list 'quote var) nil) (list 'eval 'x)))
 )

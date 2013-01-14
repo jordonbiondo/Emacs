@@ -7,6 +7,7 @@
 (require 'jorbi-util)
 (require 'jorbi-simple-compile)
 (require 'jorbi-colors)
+(require 'jorbi-buffer-menu)
 ;;
 ;; Init
 ;;
