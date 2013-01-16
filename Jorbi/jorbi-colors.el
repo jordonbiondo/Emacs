@@ -43,7 +43,7 @@
   (set-face-foreground 'font-lock-type-face "#66D9EF")
   (set-face-foreground 'font-lock-preprocessor-face "#FF8512")
   (set-face-foreground 'font-lock-comment-face "gray50")
-  (set-face-background 'hl-line "gray20")
+  (set-face-background 'hl-line "gray11")
   (set-face-background 'region "#414239")
   (set-face-background 'show-paren-match "yellow")
   (set-face-foreground 'font-lock-string-face "#E6DB74")

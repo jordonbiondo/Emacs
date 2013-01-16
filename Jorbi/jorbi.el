@@ -32,11 +32,9 @@
   ;; init color theme
   ;;(jorbi-dark)
   (jorbi-cool)
-  (term-eval
-   (jorbi-term-colors)
-  )
+
   ;; custom settings for termacs
-  (if (is-in-terminal)
+  (term-eval
       (jorbi-terminal-settings)
   )
   ;; key bindings
@@ -56,7 +54,7 @@
 (defun jorbi-terminal-settings()
   "Custom settings for running in terminal"
   (jorbi-term-colors)
-  (hl-line-mode 0)
+  (global-hl-line-mode 0)
 )
 
 

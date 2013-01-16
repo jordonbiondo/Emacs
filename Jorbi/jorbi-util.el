@@ -33,7 +33,7 @@
     )
 )
 
-(defun turn-on(x)
+x(defun turn-on(x)
   "Turn off a mode, e.g (turn-off tabbar-mode)"
   (if (fboundp x) 
       (progn
