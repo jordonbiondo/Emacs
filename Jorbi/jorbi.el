@@ -19,18 +19,22 @@
   ;; no tabs
   (turn-off 'tabbar-mode)
   ;; word wrap
-  (visual-line-mode t)
+  ;;(visual-line-mode t)
+  (turn-on 'visual-line-mode)
   ;; no scroll bars
   (turn-off 'scroll-bar-mode)
   ;; show parenthesis matching
   (show-paren-mode 1)
   ;; highlight current line
-  (hl-line-mode 1)
+  (global-hl-line-mode 1)
   ;; set custom font
   (jorbi-set-font)
   ;; init color theme
   ;;(jorbi-dark)
   (jorbi-cool)
+  (term-eval
+   (jorbi-term-colors)
+  )
   ;; custom settings for termacs
   (if (is-in-terminal)
       (jorbi-terminal-settings)
@@ -44,13 +48,14 @@
 
 )
 
+  
 
 ;; 
 ;; Custom settings for running in terminal
 ;;
 (defun jorbi-terminal-settings()
   "Custom settings for running in terminal"
-  (set-face-background 'default "black")
+  (jorbi-term-colors)
   (hl-line-mode 0)
 )
 
@@ -135,13 +140,17 @@
 ;;
 (defun jorbi-set-font()
   "Sets the font depeding on the system and editor"
-  (if (and (not (is-in-terminal))
-	   (eq system-type 'darwin)
-      )
-      (set-face-font 'default 
-       "-apple-Source_Code_Pro-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1"
-      )
-  )
+  (interactive)
+  (if (not (is-in-terminal))
+     (mac-eval
+      ;;(set-face-font 'default "-apple-Optima-medium-normal-normal-*-*-*-*-*-p-0-iso10646-1")
+      (set-face-font 'default  "-apple-Source_Code_Pro-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+     )
+       
+   )
+  
+    
+       
 )
 
 

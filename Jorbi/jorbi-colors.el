@@ -20,6 +20,7 @@
      (font-lock-type-face ((t (:foreground"#cd5542"))))
      (font-lock-constant-face ((t (:foreground "#9b55c3"))))
      (mode-line ((t (:background "#454545"))))
+     (hl-line ((t (:background "gray15"))))
      (mode-line-inactive ((t (:background "cornsilk4"))))
      (font-lock-variable-name-face ((t (:foreground "#baba36"))))
      (minibuffer-prompt ((t (:foreground "#fffe0a" :bold t))))
@@ -33,7 +34,8 @@
 (defun jorbi-dark()
   "Set the dark color theme"
   (interactive)
-  (set-face-background 'default "#272822")
+  ;; maybe not the best (set-face-background 'default "#272822")
+  (set-face-background 'default "#gray10")
   (set-face-foreground 'default "gray80")
   (set-face-foreground 'font-lock-function-name-face "#A6E22E")
   (set-face-foreground 'font-lock-keyword-face "#F92672")
@@ -41,7 +43,7 @@
   (set-face-foreground 'font-lock-type-face "#66D9EF")
   (set-face-foreground 'font-lock-preprocessor-face "#FF8512")
   (set-face-foreground 'font-lock-comment-face "gray50")
-  (set-face-background 'hl-line "gray30")
+  (set-face-background 'hl-line "gray20")
   (set-face-background 'region "#414239")
   (set-face-background 'show-paren-match "yellow")
   (set-face-foreground 'font-lock-string-face "#E6DB74")
@@ -55,6 +57,7 @@
 	      (progn
 		(set-face-foreground 'org-todo "#AB7B71")
 		(set-face-foreground 'org-done "#7174AB")
+		(set-face-foreground 'org-level-4 "#E36410")
 		)
 	      )
   )
@@ -69,5 +72,25 @@
   t
 )
 
+;;
+;; special colors for terminals
+;;
+(defun jorbi-term-colors()
+  (interactive)
+  (jorbi-cool)
+  (set-face-background 'default "white")
+  (set-face-foreground 'default "black")
+  
+  (set-face-foreground 'font-lock-function-name-face "green")
+
+  (set-face-foreground 'mode-line "white")
+  (set-face-background 'mode-line "black")
+  (set-face-foreground 'mode-line-inactive "black")
+  (set-face-background 'mode-line-inactive "cornsilk4")
+  
+  (set-face-foreground 'font-lock-comment-face "red1")
+)
 
 (provide 'jorbi-colors)
+
+
