@@ -76,6 +76,8 @@
 (defun jorbi-init-key-sets()
   (interactive)
   (global-set-key (kbd "C-x l") 'buffer-menu)
+  (global-set-key (kbd "C-x b") 'jorbi-simple-compile)
+  (global-set-key (kbd "C-x n") 'jorbi-make)
   (if (is-in-terminal) 
       (progn
 	(global-set-key (kbd "C-c <left>") 'previous-multiframe-window)

@@ -7,12 +7,12 @@
 (setq buffer-menu-buffer-font-lock-keywords
       '(("^....[*]Man .*Man.*"   . font-lock-variable-name-face) ;Man page
         (".*Dired.*"             . font-lock-comment-face)       ; Dired
-        ("^....[*]shell.*"       . font-lock-preprocessor-face)  ; shell buff
+        ("^....[*]shell.*"       . font-lock-warning-face)       ;; Shell
         (".*[*]scratch[*].*"     . font-lock-function-name-face) ; scratch buffer
         (".*~/Git/.*"            . font-lock-variable-name-face) ; Modified
-	(".*~/Desktop/Winter 2013/.*". font-lock-keyword-face) ; Modified
+	(".*~/Desktop/Winter2013/.*". font-lock-keyword-face) ; Modified
 	("^..[*].*"              . font-lock-constant-face)      ; 
-        ("^.[%].*"               . font-lock-comment-face)))     ; Read only
+        ("^.[%].*"               . font-lock-type-face)))     ; Read only
 
 (defun buffer-menu-custom-font-lock  ()
   (let ((font-lock-unfontify-region-function

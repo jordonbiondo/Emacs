@@ -56,4 +56,15 @@
   )
 )
 
+(defun jorbi-make()
+  (interactive)
+  (let ((makefile (concat (file-name-directory buffer-file-name) "/makefile")))
+    (if (file-exists-p makefile)	
+	(compile "make")
+      (message "\"makefile\" not found")
+    )
+  )
+  
+
+)
 (provide 'jorbi-simple-compile)

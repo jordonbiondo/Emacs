@@ -34,8 +34,9 @@
 (defun jorbi-dark()
   "Set the dark color theme"
   (interactive)
-  ;; maybe not the best (set-face-background 'default "#272822")
-  (set-face-background 'default "#gray10")
+  ;; maybe not the best 
+  (set-face-background 'default "#272822")
+  ;;(set-face-background 'default "#gray10")
   (set-face-foreground 'default "gray80")
   (set-face-foreground 'font-lock-function-name-face "#A6E22E")
   (set-face-foreground 'font-lock-keyword-face "#F92672")

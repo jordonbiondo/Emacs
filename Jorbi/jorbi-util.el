@@ -22,6 +22,18 @@
 )
 
 ;;
+;; Start a new shell with a prompted name
+;;
+(defun named-eshell()
+  (interactive)
+  (let ((oldName eshell-buffer-name) (newName (concat (read-string "Shell name: ") " - eshell")))
+    (setq eshell-buffer-name newName)
+    (eshell)
+    (setq eshell-buffer-name oldName)
+  )
+)  
+
+;;
 ;; Turn off mode
 ;;
 (defun turn-off(x)
@@ -33,7 +45,7 @@
     )
 )
 
-x(defun turn-on(x)
+(defun turn-on(x)
   "Turn off a mode, e.g (turn-off tabbar-mode)"
   (if (fboundp x) 
       (progn
