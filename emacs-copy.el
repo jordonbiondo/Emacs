@@ -5,35 +5,40 @@
 
 ;; Require std cl libs
 (require 'cl)
-
+(setq exec-path (append exec-path '("/sw/bin")))
 ;; repo location
 (defvar jorbi-git-path "~/Git/Emacs/")
 
 ;; add lib folder from repo
-(defun jorbi-path(p) 
+(defun jorbi-path(&optional p) 
   (concat jorbi-git-path p)
 )
 ;; add vendor lib
-(defun jorbi-vendor(p) 
+(defun jorbi-vendor(&optional p) 
   (concat jorbi-git-path (concat "Vendor/" p))
 )
 
+
+
 ;; set up load path
-(setq load-path (append load-path 
-			'(
-			  (jorbi-path)
-			  (jorbi-vendor)
-			  (jorbi-path "Mars/")
-			  (jorbi-vendor "Lua-Emacs/")
-			  (jorbi-vendor "Mathematica/")
-			  (jorbi-vendor "CSharp/")
-			  ("~/Git/web-mode/")
-			  (jorbi-vendor "color-theme/")
-			  (jorbi-vendor "emacs-jabber/")
-			  "/usr/local/go/misc/emacs/"
-			 )
-		 )
-)
+(add-to-list 'load-path (jorbi-vendor))
+;;(setq load-path (append load-path 
+;;			'(
+(add-to-list 'load-path (jorbi-path))
+(add-to-list 'load-path (jorbi-vendor))
+(add-to-list 'load-path (jorbi-path "Mars/"))
+(add-to-list 'load-path (jorbi-path "Jorbi/"))
+(add-to-list 'load-path (jorbi-vendor "Lua-Emacs/"))
+(add-to-list 'load-path (jorbi-vendor "Mathematica/"))
+(add-to-list 'load-path (jorbi-vendor "CSharp/"))
+(add-to-list 'load-path "~/Git/web-mode/")
+(add-to-list 'load-path (jorbi-vendor "color-theme/"))
+(add-to-list 'load-path (jorbi-vendor "jdee/lisp/"))
+(add-to-list 'load-path (jorbi-vendor "emacs-jabber/"))
+(add-to-list 'load-path "/usr/local/go/misc/emacs/")
+;;			 )
+;;		 )
+;;)
 
 
 
@@ -49,23 +54,24 @@
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 
+(add-to-list 'auto-mode-alist '("\\*scratch*\\'" . emacs-lisp-mode))
+
 
 ;; jordon biondo
 (require 'jorbi)
 
-(autoload 'dart-mode "dart-mode" "Dart Mode" nil)
-(add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode))
-;;(require 'dart-mode)
+;;(autoload 'dart-mode "dart-mode" "Dart Mode" nil)
+;;(add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode))
+(require 'dart-mode)
+
+
 ;; io
-;;(require 'io-mode)
-(autoload 'io-mode "io-mode" "IO mode" nil)
-(if io-mode-auto-mode-p
-    (add-to-list 'auto-mode-alist '("\\.io\\'" . io-mode)))
+(require 'io-mode)
+;;(autoload 'io-mode "io-mode" "IO mode" nil)
+;;(if io-mode-auto-mode-p
+;;  (add-to-list 'auto-mode-alist '("\\.io\\'" . io-mode)))
 
 
-
-;; edit serverp
-;;(require 'edit-server) nope
 
 ;; Mars
 (require 'mars)
@@ -85,12 +91,14 @@
 ;;
 ;;(require 'csharp-mode)
 
-
+;; JDEE
+;;(load "jde")
+;;(setq jde-web-browser "Chromium")
 ;; Color Theme
 (require 'color-theme);
 
 ;; initialize personal settings
-;;(jorbi-init)
+(jorbi-init)
 
 
 
