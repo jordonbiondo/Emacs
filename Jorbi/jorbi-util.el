@@ -24,13 +24,14 @@
 ;;
 ;; Start a new shell with a prompted name
 ;;
-(defun named-eshell()
+(defun named-shell()
   (interactive)
-  (let ((oldName eshell-buffer-name) (newName (concat (read-string "Shell name: ") " - eshell")))
-    (setq eshell-buffer-name newName)
-    (eshell)
-    (setq eshell-buffer-name oldName)
-  )
+  (shell (read-string "Shell name: "))
+;;  (let ((oldName eshell-buffer-name) (newName (concat (read-string "Shell name: ") " - eshell")))
+;;    (setq eshell-buffer-name newName)
+;;    (eshell)
+;;    (setq eshell-buffer-name oldName)
+;;  )
 )  
 
 ;;
