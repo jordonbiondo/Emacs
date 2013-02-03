@@ -36,9 +36,14 @@
 (add-to-list 'load-path (jorbi-vendor "jdee/lisp/"))
 (add-to-list 'load-path (jorbi-vendor "emacs-jabber/"))
 (add-to-list 'load-path "/usr/local/go/misc/emacs/")
+(add-to-list 'load-path (jorbi-vendor "auto-complete-install/"))
 ;;			 )
 ;;		 )
 ;;)
+
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories (jorbi-vendor "auto-complete-install/dict"))
+(ac-config-default)
 
 
 
@@ -48,7 +53,7 @@
 ;;(require 'jabber-autoloads)
 
 (require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
