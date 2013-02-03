@@ -5,14 +5,14 @@
     ("~/Git/*" . font-lock-keyword-face)))
 
 (setq buffer-menu-buffer-font-lock-keywords
-      '(("^....[*]Man .*Man.*"   . font-lock-variable-name-face) ;Man page
-        (".*Dired.*"             . font-lock-comment-face)       ; Dired
-        ("^....[*]shell.*"       . font-lock-warning-face)       ;; Shell
-        (".*[*]scratch[*].*"     . font-lock-function-name-face) ; scratch buffer
-        (".*~/Git/.*"            . font-lock-variable-name-face) ; Modified
-	(".*~/Desktop/Winter2013/.*". font-lock-keyword-face) ; Modified
-	("^..[*].*"              . font-lock-constant-face)      ; 
-        ("^.[%].*"               . font-lock-type-face)))     ; Read only
+      '(("^....[*]Man .*Man.*"   . font-lock-variable-name-face)       ;Man page
+        (".*Dired.*"             . font-lock-comment-face)             ; Dired
+        ("^....[*]shell.*"       . font-lock-warning-face)             ; Shell
+        (".*[*]scratch[*].*"     . font-lock-function-name-face)       ; scratch buffer
+        (".*~/Git/Emacs/.*"            . font-lock-variable-name-face) ; Emacs config files
+	(".*~/Desktop/Winter2013/.*". font-lock-keyword-face)          ; school dir
+	("^..[*].*"              . font-lock-constant-face)            ; wat
+        ("^.[%].*"               . font-lock-type-face)))              ; Read only
 
 (defun buffer-menu-custom-font-lock  ()
   (let ((font-lock-unfontify-region-function

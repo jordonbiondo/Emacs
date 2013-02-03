@@ -74,10 +74,19 @@
 ;; Init Key Sets.
 ;;
 (defun jorbi-init-key-sets()
+  "Set up custom keybindings"
   (interactive)
+  
+  ;; open the buffer menu
   (global-set-key (kbd "C-x l") 'buffer-menu)
+  
+  ;; run simple compile
   (global-set-key (kbd "C-x b") 'jorbi-simple-compile)
+  
+  ;; run makefile
   (global-set-key (kbd "C-x n") 'jorbi-make)
+  
+  ;; Set up window switching
   (if (is-in-terminal) 
       (progn
 	(global-set-key (kbd "C-c <left>") 'previous-multiframe-window)
@@ -88,17 +97,32 @@
 	(global-set-key (kbd "C-.") 'next-multiframe-window)
     )
   )
-  (mac-eval
-   (global-set-key (kbd "C-M-A-<right>") 'enlarge-window-horizontally)
-   (global-set-key (kbd "C-M-A-<left>") 'shrink-window-horizontally)
-   (global-set-key (kbd "C-M-A-<up>") 'enlarge-window)
-   (global-set-key (kbd "C-M-A-<down>") 'shrink-window)
-  )
 
+  ;; set up the window resize keys
+  (let ((keys "C-M-s-"))
+    ;; aquamacs uses A instead of super 's'
+
+    (aqua-eval
+     (set 'keys "C-M-A-")
+    )
+    
+    (global-set-key (kbd (concat keys "<right>")) 'enlarge-window-horizontally)
+    (global-set-key (kbd (concat keys "<left>")) 'shrink-window-horizontally)
+    (global-set-key (kbd (concat keys "<up>")) 'enlarge-window)
+    (global-set-key (kbd (concat keys "<down>")) 'shrink-window)
+   )
+  
+  ;; quick indent
   (global-set-key (kbd "<C-tab>") 'quick-indent)
+  
+  ;; doc comment macro
   (global-set-key (kbd "C-M-k") 'jorbi-doc-comment-macro)
+  
+  ;; kill-line
   (global-set-key (kbd "C-k") 'kill-line)
-  (global-set-key (kbd "C-x t") 'jorbi-switch-to-shell)
+  
+  ;; switch to shell - no longer used
+  ;;(global-set-key (kbd "C-x t") 'jorbi-switch-to-shell)
 )
 
 ;;
@@ -115,25 +139,30 @@
 ;;
 ;; Macros
 ;;
+;; elisp document comment
 (fset 'jorbi-el-doc-comment-macro
    [?\C-a return ?\C-p tab ?\; ?\; return ?\; ?\; return ?\; ?\; up ? ])
 
+;; c style doc comment
 (fset 'jorbi-doc-comment-macro
    [?\C-a return ?\C-p tab ?/ ?* return ?  ?* return ?  ?* ?/ ?\C-p ? ])
 
 
 
 ;;
-;; Switch to termainl buffer
+;; Switch to termainl buffer - no longer used
 ;;
-(defun jorbi-switch-to-shell()
-  "Switches to the shell buffer if it exists"
-  (interactive)
-  (if (get-buffer "*shell*")
-      (switch-to-buffer-other-window "*shell*")
-    ;;(term "/bin/bash")
-  )
-)
+
+;; (defun jorbi-switch-to-shell()
+;;   "Switches to the shell buffer if it exists"
+;;   (interactive)
+;;   (if (get-buffer "*shell*")
+;;       (switch-to-buffer-other-window "*shell*")
+;;     ;;(term "/bin/bash")
+;;   )
+;; )
+
+
 
 ;;
 ;; Set font
@@ -143,22 +172,19 @@
   (interactive)
   (if (not (is-in-terminal))
      (mac-eval
-      ;;(set-face-font 'default "-apple-Optima-medium-normal-normal-*-*-*-*-*-p-0-iso10646-1")
-      (set-face-font 'default  "-apple-Source_Code_Pro-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+     ;;(set-face-font 'default "-apple-Optima-medium-normal-normal-*-*-*-*-*-p-0-iso10646-1")
+     ;;(set-face-font 'default  "-apple-Source_Code_Pro-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+      (set-default-font "-apple-Inconsolata-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
      )
-       
    )
-  
-    
-       
 )
-
 
 
 ;;
 ;; Directory for go 
 ;;
 (defvar go-bin-dir "/usr/local/go/bin/")
+
 
 ;;
 ;; Add Go to PATH

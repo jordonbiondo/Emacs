@@ -81,10 +81,27 @@
 	(list 'dolist (list 'x (list 'quote var) nil) (list 'eval 'x)))
 )
 
+;;
+;; Evaluate if running in a terminal
+;;
 (defmacro term-eval (&rest var)
   (list 'if (list 'is-in-terminal)
 	(list 'dolist (list 'x (list 'quote var) nil) (list 'eval 'x)))
 )
+
+
+
+;;
+;; Evaluate if aquamacs
+;;
+(defmacro aqua-eval (&rest var)
+  (list 'if (list 'boundp (quote 'aquamacs-version))
+	(list 'dolist (list 'x (list 'quote var) nil) (list 'eval 'x)))
+)
+
+
+
+
 
 ;;(defmacro jorbi-require (&rest var)
 ;;  (list 'if (list 'is-in-terminal)

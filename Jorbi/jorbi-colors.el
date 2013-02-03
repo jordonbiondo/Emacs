@@ -2,7 +2,8 @@
   (interactive)
   (color-theme-install
    '(jorbi-cool
-      ((background-color . "#14171a")
+     ;;((background-color . "#14171a")
+     ((background-color . "gray13")
       (background-mode . light)
       (border-color . "#1f1f1f")
       (cursor-color . "#f57e00")
