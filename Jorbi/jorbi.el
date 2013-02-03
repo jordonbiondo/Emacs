@@ -99,18 +99,18 @@
   )
 
   ;; set up the window resize keys
-  (let ((keys "C-M-s-"))
-    ;; aquamacs uses A instead of super 's'
+    (global-set-key (kbd "C-M-s-<right>") 'enlarge-window-horizontally)
+    (global-set-key (kbd "C-M-s-<left>") 'shrink-window-horizontally)
+    (global-set-key (kbd "C-M-s-<up>") 'enlarge-window)
+    (global-set-key (kbd "C-M-s-<down>") 'shrink-window)
+
 
     (aqua-eval
-     (set 'keys "C-M-A-")
+     (global-set-key (kbd "C-M-A-<right>") 'enlarge-window-horizontally)
+     (global-set-key (kbd "C-M-A-<left>") 'shrink-window-horizontally)
+     (global-set-key (kbd "C-M-A-<up>") 'enlarge-window)
+     (global-set-key (kbd "C-M-A-<down>") 'shrink-window)
     )
-    
-    (global-set-key (kbd (concat keys "<right>")) 'enlarge-window-horizontally)
-    (global-set-key (kbd (concat keys "<left>")) 'shrink-window-horizontally)
-    (global-set-key (kbd (concat keys "<up>")) 'enlarge-window)
-    (global-set-key (kbd (concat keys "<down>")) 'shrink-window)
-   )
   
   ;; quick indent
   (global-set-key (kbd "<C-tab>") 'quick-indent)

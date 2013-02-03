@@ -1,0 +1,7 @@
+* Emacs Configuration Files
+  This is my entire personal emacs config. Most is reusable, however emacs-copy.el and 
+  some of jorbi.el will needto be configured for your machine.
+
+
+
+
