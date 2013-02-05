@@ -71,6 +71,17 @@
 		)
 	      )
   )
+
+  (add-hook 'eshell-mode-hook
+	    (lambda()
+	      (progn
+		(set-face-foreground 'eshell-prompt-face (face-foreground 'font-lock-keyword-face))
+		(set-face-foreground 'eshell-ls-directory-face (face-foreground 'font-lock-function-name-face))
+		(set-face-foreground 'eshell-ls-backup-face (face-foreground 'font-lock-variable-name-face))
+				     
+	      )
+	    )
+   )
   t
 )
 
