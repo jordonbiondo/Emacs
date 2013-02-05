@@ -46,8 +46,7 @@
 (ac-config-default)
 
 
-
-
+(require 'twittering-mode)
 ;;(require 'jabber)
 ;; For 0.7.90 and above:
 ;;(require 'jabber-autoloads)
