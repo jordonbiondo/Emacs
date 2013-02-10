@@ -35,6 +35,7 @@
 (add-to-list 'load-path (jorbi-vendor "color-theme/"))
 (add-to-list 'load-path (jorbi-vendor "jdee/lisp/"))
 (add-to-list 'load-path (jorbi-vendor "emacs-jabber/"))
+(add-to-list 'load-path (jorbi-vendor "header2/"))
 (add-to-list 'load-path "/usr/local/go/misc/emacs/")
 (add-to-list 'load-path (jorbi-vendor "auto-complete-install/"))
 ;;			 )
@@ -57,8 +58,6 @@
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-
-(add-to-list 'auto-mode-alist '("\\*scratch*\\'" . emacs-lisp-mode))
 
 
 ;; jordon biondo
@@ -93,7 +92,29 @@
 
 ;; C#
 ;;
-;;(require 'csharp-mode)
+; Basic code required for C# mode
+(require 'flymake)
+(autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
+(setq auto-mode-alist  (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
+
+;; Custom code to use a default compiler string for all C# files
+
+;; (defvar my-csharp-default-compiler nil)
+;; (setq my-csharp-default-compiler "mono @@FILE@@")
+
+;; (defun my-csharp-get-value-from-comments (marker-string line-limit)
+;;   my-csharp-default-compiler)
+
+;; (add-hook 'csharp-mode-hook (lambda ()
+;;                               (if my-csharp-default-compiler
+;;                                   (progn
+;;                                     (fset 'orig-csharp-get-value-from-comments
+;;                                           (symbol-function 'csharp-get-value-from-comments))
+;;                                     (fset 'csharp-get-value-from-comments
+;;                                           (symbol-function 'my-csharp-get-value-from-comments))))
+;;                               (flymake-mode)))(require 'flymake)
+
+
 
 ;; JDEE
 ;;(load "jde")
@@ -105,7 +126,8 @@
 (jorbi-init)
 
 
-
+;; Header 2
+(require 'header2)
 
 (setq ring-bell-function #'ignore)
 

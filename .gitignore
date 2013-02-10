@@ -3,3 +3,4 @@
 .#*.el
 *.elc
 .DS_Store
+.*#
