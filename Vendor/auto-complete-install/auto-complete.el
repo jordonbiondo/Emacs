@@ -1533,7 +1533,7 @@ that have been made before in this function."
   auto-complete-mode auto-complete-mode-maybe
   :group 'auto-complete)
 
-
+
 
 ;;;; Compatibilities with other extensions
 

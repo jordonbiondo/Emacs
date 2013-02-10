@@ -2811,7 +2811,7 @@ point is at the beginning of the line."
   (regexp-opt
    (append (if (boundp 'web-mode-extra-js-keywords)
                web-mode-extra-js-keywords '())
-           '("catch" "false" "for" "function" "if" "in" "instanceof"
+           '("catch" "false" "for" "function" "if" "else" "in" "instanceof"
              "new" "null" "return"
              "this" "typeof" "true" "try" "undefined" "var" "while")))
   "JavaScript keywords.")
