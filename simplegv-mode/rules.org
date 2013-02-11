@@ -1,0 +1,12 @@
+* Indent rules
+| rule# | if                     | then indent: |
+|-------+------------------------+--------------|
+|     1 | beginning of buff      | to 0         |
+|     2 | at begin               | to 0         |
+|     3 | after begin            | + 1          |
+|     4 | after input            | + 1          |
+|     5 | output after input     | - 1          |
+|     6 | after output           | + 1          |
+|     7 | after named value list | + 1          |
+|     8 |                        |              |
+#+TBLFM: $1='(- @# 1)

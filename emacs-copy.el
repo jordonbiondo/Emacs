@@ -5,7 +5,8 @@
 
 ;; Require std cl libs
 (require 'cl)
-(setq exec-path (append exec-path '("/sw/bin")))
+
+
 ;; repo location
 (defvar jorbi-git-path "~/Git/Emacs/")
 
@@ -27,6 +28,9 @@
 (add-to-list 'load-path (jorbi-path))
 (add-to-list 'load-path (jorbi-vendor))
 (add-to-list 'load-path (jorbi-path "Mars/"))
+;; simpel gv
+(add-to-list 'load-path (jorbi-path "simplegv-mode/")) ;; SIMPLE GV
+;;
 (add-to-list 'load-path (jorbi-path "Jorbi/"))
 (add-to-list 'load-path (jorbi-vendor "Lua-Emacs/"))
 (add-to-list 'load-path (jorbi-vendor "Mathematica/"))
@@ -62,6 +66,7 @@
 
 ;; jordon biondo
 (require 'jorbi)
+(mac-eval (setq exec-path (append exec-path '("/sw/bin"))));; fixes doc-view on mac
 
 ;;(autoload 'dart-mode "dart-mode" "Dart Mode" nil)
 ;;(add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode))
@@ -74,17 +79,24 @@
 ;;(if io-mode-auto-mode-p
 ;;  (add-to-list 'auto-mode-alist '("\\.io\\'" . io-mode)))
 
+;; simple gv mode
+(require 'simplegv-mode)
 
 
 ;; Mars
 (require 'mars)
 
+
 ;; Go
-(require 'go-mode-load)
-(require 'go-mode)
+(mac-eval
+ (require 'go-mode-load)
+ (require 'go-mode)
+)
+
 
 ;; Lua
 (require 'lua-mode)
+
 
 ;; Mathematica
 (require 'mathematica)
@@ -126,7 +138,7 @@
 (jorbi-init)
 
 
-;; Header 2
+;; Header 2.
 (require 'header2)
 
 (setq ring-bell-function #'ignore)
