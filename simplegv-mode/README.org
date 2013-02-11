@@ -1,28 +1,35 @@
 * simplegv-mode
-  An Emacs major mode for editing JLSCircuitTester files writting in the SimpleGV input set format
+  An Emacs major mode for editing JLSCircuitTester files written in the SimpleGV input set format.
   [[http://www.cis.gvsu.edu/~kurmasz/JLSCircuitTester/][JLSCircuitTester can be found here]]
 ** Screenshot
-   [[http://i.imgur.com/OnnsyKr.png]]
-** Known Issues
-*** Autoloading   
-   JLSCircuitTester test files do not have a explicit file extension, and as a results
-   simplegv-mode will not be autoloaded when opening any give test file.
-   
-   To fix this, simplegv-mode defines an autoload file extension of ".jlt"
-   If the test file you are opening does not have a .jlt extension you can manually 
-   start simplegv-mode with "M-x simplegv-mode"
-** Current Features
-   - Basic Syntax Highlighting
+   [[http://i.imgur.com/za160fF.png]]
+** Features
+   - Complete syntax highlighting
    - Auto-indentation
+   - Full Auto-complete-mode support
 ** Future Plans
-   - Complete Syntax Highlighting
+   - +Complete Syntax Highlighting+
+   - +Auto-complete dictionary+
    - Fly-make support
    - Running a test in Emacs
    - Parse, highlight, and display results in another buffer   
-   - Auto-complete dictionary
 ** Installing
    To install simplegv-mode to Emacs, add the following to your ~/.emacs file:
-   #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC lisp
    (add-to-list 'load-path "path/to/directory/containing/simplegv-mode.el")
    (require 'simplegv-mode)
    #+END_SRC
+** Known Issues
+*** Autoloading   
+   JLSCircuitTester test files do not have a explicit file extension, as a results, simplegv-mode
+   cannot be autoloaded based on file name.
+   To fix this, simplegv-mode defines an autoload file extension of ".jlt"
+   
+   If you'd like to use a differnet file extensions add this to your ~/.emacs
+#+BEGIN_SRC lisp
+   (add-to-list 'auto-mode-alist '("\\.YOURFILEEXTENSION\\'" . simplegv-mode))
+#+END_SRC
+   If the test file you are opening does not have a .jlt extension you can 
+   manually start simplegv-mode with "M-x simplegv-mode".
+
+
