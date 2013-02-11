@@ -18,6 +18,7 @@
      (font-lock-function-name-face ((t (:foreground "#6aaf50"))))
      (font-lock-keyword-face ((t (:foreground "#5180b3"))))
      (font-lock-string-face ((t (:foreground "#bdbc61"))))
+     (font-lock-preprocessor-face ((t (:foreground "#FF8512"))))
      (font-lock-type-face ((t (:foreground"#cd5542"))))
      (font-lock-constant-face ((t (:foreground "#9b55c3"))))
      (mode-line ((t (:background "#454545"))))
