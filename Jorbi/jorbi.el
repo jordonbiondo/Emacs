@@ -14,6 +14,8 @@
 (defun jorbi-init()
   "Initiliaze My Settings"
   (interactive)
+  ;; no bell
+  (setq ring-bell-function #'ignore)
   ;; no tool bar
   (turn-off 'tool-bar-mode)
   ;; no tabs

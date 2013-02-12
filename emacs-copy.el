@@ -1,10 +1,10 @@
+;; Require std cl libs
+(require 'cl)
+
 ;; No Startup Screen
 (custom-set-variables
  '(inhibit-startup-screen t)
 )
-
-;; Require std cl libs
-(require 'cl)
 
 
 ;; repo location
@@ -33,6 +33,7 @@
 ;;
 (add-to-list 'load-path (jorbi-path "Jorbi/"))
 (add-to-list 'load-path (jorbi-vendor "Lua-Emacs/"))
+(add-to-list 'load-path (jorbi-vendor "slime/"))
 (add-to-list 'load-path (jorbi-vendor "Mathematica/"))
 (add-to-list 'load-path (jorbi-vendor "CSharp/"))
 (add-to-list 'load-path "~/Git/web-mode/")
@@ -51,12 +52,14 @@
 (ac-config-default)
 
 
-(require 'twittering-mode)
+;;(require 'twittering-mode)
+(autoload 'twittering-mode "twittering-mode" "twitter" nil)
 ;;(require 'jabber)
 ;; For 0.7.90 and above:
 ;;(require 'jabber-autoloads)
 
-(require 'web-mode)
+;; Web Mode
+(autoload 'web-mode "web-mode" "web" nil)
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
@@ -68,70 +71,53 @@
 (require 'jorbi)
 (mac-eval (setq exec-path (append exec-path '("/sw/bin"))));; fixes doc-view on mac
 
-;;(autoload 'dart-mode "dart-mode" "Dart Mode" nil)
-;;(add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode))
-(require 'dart-mode)
+
+;; Dart Mode
+(autoload 'dart-mode "dart-mode" "Dart Mode" nil)
+(add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode))
+
+;; io Mode
+(autoload 'io-mode "io-mode" "IO mode" nil)
+(add-to-list 'auto-mode-alist '("\\.io\\'" . io-mode))
+
+;; SimpleGV Mode
+(autoload 'simplegv-mode "simplegv-mode" "SimpleGV" nil)
+(add-to-list 'auto-mode-alist '("\\.jlt\\'" . simplegv-mode))
+
+;; Mars Functions
+;;(autoload 'mars-init "mars" "Mars" nil)
+;;(add-to-list 'auto-mode-alist '("\\(\\.asm\\|\\.a\\|\\.s\\)\\'" . mars-init))
+;;(require 'mars)
 
 
-;; io
-(require 'io-mode)
-;;(autoload 'io-mode "io-mode" "IO mode" nil)
-;;(if io-mode-auto-mode-p
-;;  (add-to-list 'auto-mode-alist '("\\.io\\'" . io-mode)))
-
-;; simple gv mode
-(require 'simplegv-mode)
-
-
-;; Mars
-(require 'mars)
-
-
-;; Go
+;; Go Mode
 (mac-eval
  (require 'go-mode-load)
- (require 'go-mode)
+ (autoload 'go-mode "go-mode" "go" nil)
+ (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+;; (require 'go-mode)
 )
 
+;; SLIME
+(mac-eval
+ (setq inferior-lisp-program "/sw/bin/sbcl")
+ (autoload 'slime-selector "slime" t)
+)
 
-;; Lua
-(require 'lua-mode)
+;; Lua Mode
+(autoload 'lua-mode "lua-mode" "lua" nil)
+(add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-mode))
 
 
-;; Mathematica
-(require 'mathematica)
+;; Mathematica Mode
 (setq mathematica-command-line "/usr/local/bin/math")
 
-;; C#
-;;
-; Basic code required for C# mode
+;; C# MODE
 (require 'flymake)
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (setq auto-mode-alist  (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
 
-;; Custom code to use a default compiler string for all C# files
 
-;; (defvar my-csharp-default-compiler nil)
-;; (setq my-csharp-default-compiler "mono @@FILE@@")
-
-;; (defun my-csharp-get-value-from-comments (marker-string line-limit)
-;;   my-csharp-default-compiler)
-
-;; (add-hook 'csharp-mode-hook (lambda ()
-;;                               (if my-csharp-default-compiler
-;;                                   (progn
-;;                                     (fset 'orig-csharp-get-value-from-comments
-;;                                           (symbol-function 'csharp-get-value-from-comments))
-;;                                     (fset 'csharp-get-value-from-comments
-;;                                           (symbol-function 'my-csharp-get-value-from-comments))))
-;;                               (flymake-mode)))(require 'flymake)
-
-
-
-;; JDEE
-;;(load "jde")
-;;(setq jde-web-browser "Chromium")
-;; Color Theme
 (require 'color-theme);
 
 ;; initialize personal settings
@@ -141,8 +127,5 @@
 ;; Header 2.
 (require 'header2)
 
-(setq ring-bell-function #'ignore)
 
-;; I really need to redo my whole config, this is embarassing
-(load-library "jorbi-colors")
-(jorbi-cool)
+

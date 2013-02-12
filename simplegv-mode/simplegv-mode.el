@@ -6,9 +6,9 @@
 ;; Maintainer: Jordon Biondo biondoj@mail.gvsu.edu
 ;; Created: Sun Feb 10 12:54:49 2013 (-0500)
 ;; Version: 0.01
-;; Last-Updated: Mon Feb 11 15:32:49 2013 (-0500)
+;; Last-Updated: Mon Feb 11 16:44:17 2013 (-0500)
 ;;           By: Jordon Biondo
-;;     Update #: 9
+;;     Update #: 10
 ;; URL: www.github.com/jordonbiondo/simplegv-mode
 ;; Doc URL:
 ;; Keywords: extension, convinience
@@ -88,7 +88,6 @@
     (,(concat (regexp-opt simplegv-builtins 'words) "\\((\\)") 1 font-lock-builtin-face t);; builtin
     ("^[ \t]*#> *InputSetLoader:" . font-lock-preprocessor-face);; set loader preprocessor
     ("^#> *InputSetLoader: *" "[a-zA-Z_]+\\.[a-zA-Z_]+" nil nil ( 0 font-lock-constant-face));; set loader name
-    ("#+.*" . font-lock-comment-face);; comment
     ("\\<BEGIN *" "\\<[a-zA-Z_]+\\>" nil nil (0 font-lock-function-name-face));; tests
     ("\\<OUTPUT_SET_TYPE  *\\(SHARED \\)? *" "\\<[a-zA-Z_]+\\>" nil nil (0 font-lock-type-face));; output set type
     ;;("NAMED_VALUE_LISTS *\n.*" "\\<[a-zA-Z_]+\\>" nil nil (0 font-lock-variable-name-face)) broken
@@ -160,13 +159,29 @@
 	      (back-to-indentation))))))
 
 
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Simplegv syntax table
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defvar simplegv-syntax-table
+  (let ((table (make-syntax-table)))
+    (modify-syntax-entry ?\# "< b" table)
+    (modify-syntax-entry ?\n "> b" table)
+    table)
+  "Syntax table for `simplegv-mode'.")
+ 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Mode definition
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define-derived-mode simplegv-mode fundamental-mode
- "GV JLT"
+  "Major mode for editing JLSCircuitTester files written with the SimpleGV input loader set format."
+ :syntax-table simplegv-syntax-table
+ (setq mode-name "JLS GV")
+ (setq comment-start "#")
+ (setq comment-end "")
  (setq font-lock-defaults '(simplegv-font-lock-keywords-1))
  (setq indent-line-function 'simplegv-indent-line))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
