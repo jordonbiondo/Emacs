@@ -5,13 +5,15 @@
     ("~/Git/*" . font-lock-keyword-face)))
 
 (setq buffer-menu-buffer-font-lock-keywords
-      '(("^....[*]Man .*Man.*"   . font-lock-variable-name-face)       ;Man page
+      '(
+	;;("^....[*]Man .*Man.*"   . font-lock-variable-name-face)       ;Man page
+	(".*magit.*"             . font-lock-preprocessor-face)
         (".*Dired.*"             . font-lock-comment-face)             ; Dired
         ("^....[*]shell.*"       . font-lock-warning-face)             ; Shell
         (".*[*]scratch[*].*"     . font-lock-function-name-face)       ; scratch buffer
         (".*~/Git/Emacs/.*"            . font-lock-variable-name-face) ; Emacs config files
 	(".*~/Desktop/Winter2013/.*". font-lock-keyword-face)          ; school dir
-	("^..[*].*"              . font-lock-constant-face)            ; wat
+	("^..[*].*"              . font-lock-constant-face)            ; modified
         ("^.[%].*"               . font-lock-type-face)))              ; Read only
 
 (defun buffer-menu-custom-font-lock  ()

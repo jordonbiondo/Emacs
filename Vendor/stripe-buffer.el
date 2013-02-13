@@ -34,9 +34,9 @@
 
 (defface stripe-highlight
     '((((class color) (background dark))
-       (:background "#444444"))
+       (:background "#222222"))
       (((class color) (background light))
-       (:background "gray14")))
+       (:background "gray84")))
   "Face for stripes.")
 
 (defcustom stripe-max-buffer-size 50000
