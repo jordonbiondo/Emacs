@@ -35,6 +35,7 @@
 (add-to-list 'load-path (jorbi-vendor "Lua-Emacs/"))
 (add-to-list 'load-path (jorbi-vendor "slime/"))
 (add-to-list 'load-path (jorbi-vendor "Mathematica/"))
+(add-to-list 'load-path (jorbi-vendor "magit/"))
 (add-to-list 'load-path (jorbi-vendor "CSharp/"))
 (add-to-list 'load-path "~/Git/web-mode/")
 (add-to-list 'load-path (jorbi-vendor "color-theme/"))
