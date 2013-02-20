@@ -27,11 +27,6 @@
 (defun named-shell()
   (interactive)
   (shell (read-string "Shell name: "))
-;;  (let ((oldName eshell-buffer-name) (newName (concat (read-string "Shell name: ") " - eshell")))
-;;    (setq eshell-buffer-name newName)
-;;    (eshell)
-;;    (setq eshell-buffer-name oldName)
-;;  )
 )  
 
 ;;
@@ -77,9 +72,18 @@
 ;; like progn, but only evaluates on a darwin system
 ;;
 (defmacro mac-eval (&rest var)
-  (list 'if (list 'string= 'system-type "darwin")
+  (list 'if (list 'string= 'system-type (quote 'darwin))
 	(list 'dolist (list 'x (list 'quote var) nil) (list 'eval 'x)))
 )
+
+;;
+;; progn for linux
+;; 
+(defmacro linux-eval (&rest var)
+  (list 'if (list 'eq 'system-type (quote 'gnu/linux))
+	(list 'dolist (list 'x (list 'quote var) nil) (list 'eval 'x)))
+)
+
 
 ;;
 ;; Evaluate if running in a terminal
@@ -90,7 +94,6 @@
 )
 
 
-
 ;;
 ;; Evaluate if aquamacs
 ;;
@@ -98,15 +101,6 @@
   (list 'if (list 'boundp (quote 'aquamacs-version))
 	(list 'dolist (list 'x (list 'quote var) nil) (list 'eval 'x)))
 )
-
-
-
-
-
-;;(defmacro jorbi-require (&rest var)
-;;  (list 'if (list 'is-in-terminal)
-;;	(list 'dolist (list 'x (list 'quote var) nil) (list 'eval 'x)))
-;;)
 
 
 
