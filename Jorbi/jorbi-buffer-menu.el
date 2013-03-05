@@ -28,5 +28,6 @@
 (add-hook 'buffer-menu-mode-hook 'buffer-menu-custom-font-lock)
 
 (add-hook 'buffer-menu-mode-hook 'stripe-buffer-mode)
+(add-hook 'buffer-menu-mode-hook 'auto-revert-mode)
 
 (provide 'jorbi-buffer-menu)

@@ -53,11 +53,8 @@
 (ac-config-default)
 
 
-;;(require 'twittering-mode)
+
 (autoload 'twittering-mode "twittering-mode" "twitter" nil)
-;;(require 'jabber)
-;; For 0.7.90 and above:
-;;(require 'jabber-autoloads)
 
 ;; Web Mode
 (autoload 'web-mode "web-mode" "web" nil)
@@ -104,6 +101,10 @@
  (setq inferior-lisp-program "/sw/bin/sbcl")
  (autoload 'slime-selector "slime" t)
 )
+(linux-eval
+ (setq inferior-lisp-program "/usr/bin/clisp")
+ (autoload 'slime-selector "slime" t)
+)
 
 ;; Lua Mode
 (autoload 'lua-mode "lua-mode" "lua" nil)
@@ -127,6 +128,9 @@
 
 ;; Header 2.
 (require 'header2)
+(set-face-attribute 'default nil :height 100)
 
-
-
+(require 'powerline)
+(powerline-default)
+(set-face-foreground 'powerline-inactive1 "gray70")
+(set-face-foreground 'powerline-active1 "gray70")
