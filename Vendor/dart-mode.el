@@ -1,8 +1,15 @@
-;;; dart-mode.el --- a Dart mode for emacs based upon CC mode.
+;;; dart-mode.el --- Major mode for editing Dart files
 
-;; This program is free software; you can redistribute it and/or modify
+;; Author: Nathan Weizenbaum
+;; URL: http://code.google.com/p/dart-mode
+;; Version: 0.9
+;; Keywords: language
+
+;; Copyright (C) 2011 Google Inc.
+;;
+;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2 of the License, or
+;; the Free Software Foundation, either version 3 of the License, or
 ;; (at your option) any later version.
 ;;
 ;; This program is distributed in the hope that it will be useful,
@@ -11,74 +18,420 @@
 ;; GNU General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this program; see the file COPYING.  If not, write to
-;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-;; Boston, MA 02111-1307, USA.
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
-;; This is a basic Dart mode based on Martin Stjernholm's GPL'd
-;; derived-mode-ex.el template.  It uses cc-mode and falls back on
-;; Java for basic rules.
+;; To install, save this on your load path and add the following to
+;; your .emacs file:
 ;;
-;; Note: The interface used in this file requires CC Mode 5.30 or
-;; later.
+;; (require 'dart-mode)
+;;
+;; Known bugs:
+;;
+;; * Multiline strings using """ and ''' are not recognized. They fontify
+;;   correctly, but only because they look like three strings in a row.
+;; * In a map with identifier keys, the first key is fontified like a label.
+;; * Return values for operator methods aren't fontified correctly.
+;; * Untyped parameters aren't fontified correctly.
+;; * Quotes immediately after string interpolation are marked as unclosed.
+;; * Sexp movement doesn't properly ignore quotes in interpolation.
+;; * Methods using "=>" can cause indentation woes.
+;; * C and C++ modes seem to be hosed.
 
 ;;; Code:
 
 (require 'cc-mode)
-(require 'compile)
+(require 'cc-langs)
+(eval-when-compile (require 'cl))
 
-;; These are only required at compile time to get the sources for the
-;; language constants.  (The cc-fonts require and the font-lock
-;; related constants could additionally be put inside an
-;; (eval-after-load "font-lock" ...) but then some trickery is
-;; necessary to get them compiled.)
-(eval-when-compile
-  (require 'cc-langs)
-  (require 'cc-fonts))
+(eval-and-compile (c-add-language 'dart-mode 'java-mode))
 
-(eval-and-compile
-  ;; Make our mode known to the language constant system.  Use Java
-  ;; mode as the fallback for the constants we don't change here.
-  ;; This needs to be done also at compile time since the language
-  ;; constants are evaluated then.
-  (c-add-language 'dart-mode 'java-mode))
 
-;; Dart has no boolean but a string and a vector type.
+;;; CC configuration
+
+(c-lang-defconst c-symbol-start
+  dart (concat "[" c-alpha "_]"))
+
+(c-lang-defconst c-identifier-ops
+  dart nil)
+
+(c-lang-defconst c-after-id-concat-ops
+  dart nil)
+
+(c-lang-defconst c-multiline-string-start-char
+  dart ?@)
+
+(c-lang-defconst c-opt-cpp-prefix
+  dart "\\s *#\\s *")
+
+(c-lang-defconst c-cpp-message-directives
+  dart nil)
+
+(c-lang-defconst c-cpp-include-directives
+  dart nil)
+
+(c-lang-defconst c-opt-cpp-macro-define
+  dart nil)
+
+(c-lang-defconst c-cpp-expr-directives
+  dart '("import" "source" "library" "resource"))
+
+(c-lang-defconst c-cpp-expr-functions
+  dart nil)
+
+(c-lang-defconst c-operators
+  dart `((prefix "#")
+         (postfix-if-paren "<" ">")
+         (prefix "super")
+         (left-assoc ".")
+         (postfix "++" "--" "[" "]" "(" ")")
+         (unary "++" "--" "+" "-" "!" "~" "negate" "new" "const")
+         (left-assoc "*" "/" "%")
+         (left-assoc "+" "-")
+         (left-assoc "<<" ">>" ">>>")
+         (left-assoc "<" ">" "<=" ">=")
+         (left-assoc "==" "!=" "===" "!==" "is" "is!")
+         (left-assoc "&")
+         (left-assoc "^")
+         (left-assoc "|")
+         (left-assoc "&&")
+         (left-assoc "||")
+         (right-assoc-sequence "?" ":")
+         (left-assoc "=>")
+         (right-assoc ,@(c-lang-const c-assignment-operators))
+         (left-assoc ",")))
+
+(c-lang-defconst c-overloadable-operators
+  dart '("==" "<" ">" "<=" ">=" "-" "+" "*" "/" "%" "|" "^" "&"
+         "<<" ">>" ">>>" "[]=" "[]" "~" "negate"))
+
+(c-lang-defconst c-opt-op-identifier-prefix
+  dart (c-make-keywords-re t '("operator")))
+
+(c-lang-defconst c-doc-comment-start-regexp
+  dart nil)
+
+(c-lang-defconst c-paragraph-start
+  dart "$")
+
 (c-lang-defconst c-primitive-type-kwds
-  dart (append '("bool" "var")
-             (delete "boolean"
-                     ;; Use append to not be destructive on the
-                     ;; return value below.
-                     (append
-                      ;; Due to the fallback to Java, we need not give
-                      ;; a language to `c-lang-const'.
-                      (c-lang-const c-primitive-type-kwds)
-                      nil))))
+  dart '("Dynamic" "void" "num" "int" "double" "bool"))
 
-;; Recognize member init lists after colons in Dart.
+(c-lang-defconst c-class-decl-kwds
+  dart '("class" "interface"))
+
+;; Don't put these in c-modifier-kwds because they can be used without a type
+;; following them.
+(c-lang-defconst c-typeless-decl-kwds
+  dart '("abstract" "const" "factory" "final" "operator" "static" "typedef" "var"))
+
+(c-lang-defconst c-modifier-kwds
+  dart nil)
+
+(c-lang-defconst c-other-decl-kwds
+  dart nil)
+
+(c-lang-defconst c-decl-hangon-kwds
+  dart '("get" "set" "native"))
+
+(c-lang-defconst c-postfix-decl-spec-kwds
+  dart '("extends" "implements" "factory"))
+
+(c-lang-defconst c-type-list-kwds
+  dart '("new" "const" "is" "is!" "extends" "implements" "factory"))
+
+(c-lang-defconst c-ref-list-kwds
+  dart nil)
+
+(c-lang-defconst c-block-stmt-2-kwds
+  dart '("for" "if" "switch" "while" "catch"))
+
+(c-lang-defconst c-simple-stmt-kwds
+  dart '("break" "continue" "return" "throw"))
+
+(c-lang-defconst c-before-label-kwds
+  dart '("break" "continue"))
+
 (c-lang-defconst c-nonlabel-token-key
-  dart (concat "\\s\(\\|" (c-lang-const c-nonlabel-token-key)))
+  dart (concat (concat "\\s\(\\|" (c-lang-const c-nonlabel-token-key))))
 
-;; No cpp in this language, but there's still a "#include" directive to
-;; fontify.  (The definitions for the extra keywords above are enough
-;; to incorporate them into the fontification regexps for types and
-;; keywords, so no additional font-lock patterns are required.)
-(c-lang-defconst c-cpp-matchers
-  dart (cons
-      ;; Use the eval form for `font-lock-keywords' to be able to use
-      ;; the `c-preprocessor-face-name' variable that maps to a
-      ;; suitable face depending on the (X)Emacs version.
-      '(eval . (list "^\\s *\\(#include\\)\\>\\(.*\\)"
-                     (list 1 c-preprocessor-face-name)
-                     '(2 font-lock-string-face)))
-      ;; There are some other things in `c-cpp-matchers' besides the
-      ;; preprocessor support, so include it.
-      (c-lang-const c-cpp-matchers)))
+(c-lang-defconst c-inexpr-class-kwds
+  dart nil)
+
+(c-lang-defconst c-inexpr-brace-list-kwds
+  dart nil)
+
+(c-lang-defconst c-other-kwds
+  dart '("in"))
+
+(c-lang-defconst c-decl-prefix-re
+  dart "\\([\{\}\([;,<]+\\)")
+
+(c-lang-defconst c-cast-parens
+  dart nil)
+
+(c-lang-defconst c-block-prefix-disallowed-chars
+  dart (set-difference (c-lang-const c-block-prefix-disallowed-chars)
+                       '(?\" ?')))
+
+(c-lang-defconst c-type-decl-prefix-key
+  dart "\\(\(\\)\\([^=]\\|$\\)")
+
+(c-lang-defconst c-after-suffixed-type-decl-key
+  dart (concat (c-lang-const c-after-suffixed-type-decl-key) "\\|:"))
+
+(c-lang-defconst c-opt-type-suffix-key
+  dart nil)
+
+(c-lang-defconst c-recognize-typeless-decls
+  dart t)
+
+(c-lang-defconst c-recognize-<>-arglists
+  dart t)
+
+(c-lang-defconst c-opt-postfix-decl-spec-kwds
+  dart '("native"))
+
+(c-lang-defconst c-opt-postfix-decl-spec-kwds
+  dart '("native"))
+
+(push '(dart-brace-list-cont-nonempty . 0)
+      (get 'c-offsets-alist 'c-stylevar-fallback))
+
+(defconst dart-c-style
+  '("java"
+    (c-basic-offset . 2)
+    (indent-tabs-mode . nil)
+    (fill-column . 80)
+    (c-offsets-alist . ((arglist-intro . ++)
+                        (arglist-cont-nonempty . ++)
+                        (statement-block-intro . dart-block-offset)
+                        (block-close . dart-block-offset)
+                        (dart-brace-list-cont-nonempty .
+                         dart-brace-list-cont-nonempty-offset)
+                        (case-label . +))))
+  "The default Dart styles.")
+
+(c-add-style "dart" dart-c-style)
+
+(defvar dart-mode-map (c-make-inherited-keymap)
+  "Keymap used in dart-mode buffers.")
+
+
+;;; CC indentation support
+
+(defun dart-block-offset (info)
+  "Calculate the correct indentation for inline functions.
+
+When indenting inline functions, we want to pretend that
+functions taking them as parameters essentially don't exist."
+  (destructuring-bind (syntax . anchor) info
+    (let ((arglist-count
+           (loop for (symbol . _) in c-syntactic-context
+                 count (eq symbol 'arglist-cont-nonempty))))
+      (if (> arglist-count 0)
+          (- (* -1 c-basic-offset arglist-count)
+             (if (eq syntax 'block-close) c-basic-offset 0))
+        (if (eq syntax 'block-close) 0 '+)))))
+
+(defun dart-brace-list-cont-nonempty-offset (info)
+  "Indent a brace-list line in the same style as arglist-cont-nonempty.
+This could be either an actual brace-list or an optional parameter."
+  (destructuring-bind (syntax . anchor) info
+    ;; If we're in a function definition with optional arguments, indent as if
+    ;; the brace wasn't there. Currently this misses the in-function function
+    ;; definition, but that's probably acceptable.
+    (if (and
+         (save-excursion (backward-up-list) (eq (char-after) ?\[))
+         (assq 'topmost-intro
+               (save-excursion (goto-char anchor) (c-guess-basic-syntax))))
+        '++
+      ;; Otherwise, we're in an actual brace list, in which case only indent
+      ;; once.
+      '+)))
+
+(defun dart-in-block-p (syntax-guess)
+  "Return whether or not the immediately enclosing {} block is a code block.
+The other option, of course, is a map literal.
+
+SYNTAX-GUESS is the output of `c-guess-basic-syntax'."
+  (save-excursion
+    (c-safe
+      ;; If we're in a continued statement within a class, we want to know we're
+      ;; in a class so we can return true.
+      (when (eq 'statement-cont (caar syntax-guess))
+        (save-excursion
+          (c-beginning-of-statement-1 nil t t)
+          (setq syntax-guess (c-guess-basic-syntax))))
+
+      (backward-up-list)
+      (when (= (char-after) ?\{)
+        (c-backward-comments)
+        (or
+         ;; Both anonymous and named functions have a ")" immediately before the
+         ;; code block.
+         (= (char-before) ?\))
+         ;; "else" and "try" are the only keywords that come immediately before
+         ;; a block.
+         (looking-back "\\<\\(else\\|try\\)\\>")
+         ;; CC is good at figuring out if we're in a class.
+         (assq 'inclass syntax-guess))))))
+
+(defadvice c-guess-basic-syntax (after dart-guess-basic-syntax activate)
+  (when (c-major-mode-is 'dart-mode)
+    (let* ((syntax (car (last ad-return-value)))
+           (type (car syntax)))
+      (save-excursion
+        (back-to-indentation)
+
+        (or
+         ;; Handle indentation in a constructor with an initializer on a
+         ;; separate line.
+         (when (memq type '(defun-block-intro inline-close))
+           (save-excursion
+             (c-safe
+               (goto-char (cadr syntax))
+               (when (= (char-after) ?:)
+                 (c-beginning-of-statement-1)
+                 (setq ad-return-value `((,type ,(point))))
+                 t))))
+
+         ;; Handle array literal indentation
+         (when (memq type
+                     '(arglist-intro
+                       arglist-cont
+                       arglist-cont-nonempty
+                       arglist-close))
+           (save-excursion
+             (c-safe
+               (backward-up-list)
+               (when (= (char-after) ?\[)
+                 (setq ad-return-value
+                       `((,(case type
+                             (arglist-intro 'brace-list-intro)
+                             (arglist-cont 'brace-list-entry)
+                             (arglist-cont-nonempty 'dart-brace-list-cont-nonempty)
+                             (arglist-close 'brace-list-close))
+                          ,(cadr syntax)))))
+               t)))
+
+         ;; Handle map literal indentation
+         (when (and (memq type '(label statement-block-intro statement-cont statement
+                                 block-close defun-block-intro defun-close))
+                    (not (dart-in-block-p ad-return-value)))
+           (save-excursion
+             (c-safe
+               (if (= (char-after) ?\})
+                   (progn
+                     (backward-up-list)
+                     (when (= (char-after) ?\{)
+                       (back-to-indentation)
+                       (setq ad-return-value `((brace-list-close ,(point))))))
+                 (c-backward-comments)
+                 ;; Completely reset ad-return-value here because otherwise it
+                 ;; gets super-screwy.
+                 (if (= (char-before) ?\{)
+                     (progn
+                       (back-to-indentation)
+                       (setq ad-return-value `((brace-list-intro ,(point))))
+                       t)
+                   (backward-up-list)
+                   (when (= (char-after) ?\{)
+                     (forward-char)
+                     (let ((contp (not (looking-at "\\s-*$"))))
+                       (c-forward-comments)
+                       (back-to-indentation)
+                       (setq ad-return-value
+                             `((,(if contp 'dart-brace-list-cont-nonempty
+                                   'brace-list-entry)
+                                ,(point))))
+                       t))))))))))))
+
+(defadvice c-inside-bracelist-p (after dart-inside-bracelist-p activate)
+  ;; This function is only called within c-guess-basic-syntax. Since we do all
+  ;; out brace-list detection in our advice, we just never report being in a
+  ;; bracelist there.
+  (when (c-major-mode-is 'dart-mode)
+    (setq ad-return-value nil)))
+
+(defadvice c-search-decl-header-end (around dart-search-decl-header-end activate)
+  (if (not (c-major-mode-is 'dart-mode))
+      (ad-do-it)
+    (let ((base (point)))
+      (while (and
+              (c-syntactic-re-search-forward "[;{=:]" nil 'move t t)
+              (c-end-of-current-token base))
+        (setq base (point)))
+      ;; If we hit :, we're in a member initialization list and we want to
+      ;; ignore = signs.
+      (when (= (char-before) ?:)
+        (while (and
+                (c-syntactic-re-search-forward "[;{]" nil 'move t t)
+                (c-end-of-current-token base))
+        (setq base (point)))))))
+
+(defadvice c-parse-state (around dart-c-parse-state activate)
+  (if (not (c-major-mode-is 'dart-mode)) (ad-do-it)
+    ;; c-parse-state is a wrapper around c-parse-state-1 that does some tricks
+    ;; to ensure that dangling brackets in preprocessor commands don't screw up
+    ;; parse information for the real world. In Dart, all "preprocessor"
+    ;; directives have matched braces, so we don't need to worry about that. The
+    ;; wrapper was also screwing up indentation in weird ways, so we just ignore
+    ;; it.
+    (setq ad-return-value (c-parse-state-1))))
+
+
+;;; Additional fontification support
+
+(defun dart-fontify-region (beg end)
+  "Use fontify the region between BEG and END as Dart.
+
+This will overwrite fontification due to strings and comments."
+  (save-excursion
+    (save-match-data
+      (save-restriction
+        (let ((font-lock-dont-widen t))
+          (narrow-to-region (- beg 1) end)
+          ;; font-lock-fontify-region apparently isn't inclusive,
+          ;; so we have to move the beginning back one char
+          (font-lock-fontify-region (point-min) (point-max)))))))
+
+(defun dart-limited-forward-sexp (limit &optional arg)
+  "Move forward using `forward-sexp' or to limit,
+whichever comes first."
+  (let (forward-sexp-function)
+    (condition-case err
+        (save-restriction
+          (narrow-to-region (point) limit)
+          (forward-sexp arg))
+      (scan-error
+       (unless (equal (nth 1 err) "Unbalanced parentheses")
+         (signal 'scan-error (cdr err)))
+       (goto-char limit)))))
+
+(defun dart-highlight-interpolation (limit)
+  "Highlight interpolation (${foo})."
+  (let ((start (point)))
+    (when (re-search-forward "\\(\\${\\)" limit t)
+      (if (elt (parse-partial-sexp start (point)) 3) ; in a string
+          (save-match-data
+            (forward-char -1)
+            (let ((beg (point)))
+              (dart-limited-forward-sexp limit)
+              (dart-fontify-region (+ 1 beg) (point)))
+
+            ;; Highlight the end of the interpolation.
+            (when (eq (char-before) ?})
+              (put-text-property (- (point) 1) (point) 'face font-lock-variable-name-face))
+            t)
+        (looking-at "\\<\\>")))))
+
+
+;;; Boilerplate font-lock piping
 
 (defcustom dart-font-lock-extra-types nil
-  "*List of extra types (aside from the type keywords) to recognize in Dart mode.
+  "*List of extra types (aside from the type keywords) to recognize in DART mode.
 Each list item should be a regexp matching a single identifier.")
 
 (defconst dart-font-lock-keywords-1 (c-lang-const c-matchers-1 dart)
@@ -87,7 +440,10 @@ Each list item should be a regexp matching a single identifier.")
 (defconst dart-font-lock-keywords-2 (c-lang-const c-matchers-2 dart)
   "Fast normal highlighting for Dart mode.")
 
-(defconst dart-font-lock-keywords-3 (c-lang-const c-matchers-3 dart)
+(defconst dart-font-lock-keywords-3
+  (cons
+   '(dart-highlight-interpolation 1 font-lock-variable-name-face prepend)
+   (c-lang-const c-matchers-3 dart))
   "Accurate normal highlighting for Dart mode.")
 
 (defvar dart-font-lock-keywords dart-font-lock-keywords-3
@@ -95,42 +451,71 @@ Each list item should be a regexp matching a single identifier.")
 
 (defvar dart-mode-syntax-table nil
   "Syntax table used in dart-mode buffers.")
-(or dart-mode-syntax-table
-    (setq dart-mode-syntax-table
-          (funcall (c-lang-const c-make-mode-syntax-table dart))))
+(unless dart-mode-syntax-table
+  (setq dart-mode-syntax-table
+        (funcall (c-lang-const c-make-mode-syntax-table dart))))
 
-(defvar dart-mode-abbrev-table nil
-  "Abbreviation table used in dart-mode buffers.")
-(c-define-abbrev-table 'dart-mode-abbrev-table
-  ;; Keywords that if they occur first on a line might alter the
-  ;; syntactic context, and which therefore should trig reindentation
-  ;; when they are completed.
-  '(("else" "else" c-electric-continued-statement 0)
-    ("while" "while" c-electric-continued-statement 0)
-    ("catch" "catch" c-electric-continued-statement 0)
-    ("finally" "finally" c-electric-continued-statement 0)))
 
-(defvar dart-mode-map (let ((map (c-make-inherited-keymap)))
-                      ;; Add bindings which are only useful for Dart
-                      map)
-  "Keymap used in dart-mode buffers.")
+;;; Flymake Support
 
-(easy-menu-define dart-menu dart-mode-map "Dart Mode Commands"
-                  ;; Can use `dart' as the language for `c-mode-menu'
-                  ;; since its definition covers any language.  In
-                  ;; this case the language is used to adapt to the
-                  ;; nonexistence of a cpp pass and thus removing some
-                  ;; irrelevant menu alternatives.
-                  (cons "Dart" (c-lang-const c-mode-menu dart)))
+(defun flymake-dart-init ()
+  "Return the dart_analyzer command to invoke for flymake."
+  (let* ((temp-file  (flymake-init-create-temp-buffer-copy
+                      'flymake-create-temp-inplace))
+	 (local-file (file-relative-name
+                      temp-file
+                      (file-name-directory buffer-file-name)))
+         ;; Work around Dart issue 7497
+         (work-dir (expand-file-name
+                    "flymake-dart-work"
+                    (flymake-get-temp-dir))))
+    (list "dart_analyzer" (list "--error_format" "machine" local-file
+                                "--work" work-dir))))
 
-;;;###autoload
-(add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode))
+(defun flymake-dart-cleanup ()
+  "Clean up after running the Dart analyzer."
+  (flymake-simple-cleanup)
+  (let ((dir-name (expand-file-name
+                   "flymake-dart-work"
+                   (flymake-get-temp-dir))))
+    (condition-case nil
+        (delete-dir dir-name t)
+      (error
+       (flymake-log 1 "Failed to delete dir %s, error ignored" dir-name)))))
+
+(eval-after-load 'flymake
+  '(progn
+     (when (boundp 'flymake-warn-line-regexp)
+       (add-hook 'dart-mode-hook
+                 (lambda ()
+                   (setq (make-variable-buffer-local 'flymake-warn-line-regexp)
+                         "^WARNING|"))))
+
+     (defadvice flymake-post-syntax-check (before flymake-post-syntax-check-dart activate)
+       "Sets the exit code of the dart_analyzer process to 0.
+
+dart_analyzer can report errors for files other than the current
+file. flymake dies horribly if the process emits a non-zero exit
+code without any warnings for the current file. These two
+properties interact poorly."
+       (when (eq major-mode 'dart-mode)
+         (ad-set-arg 0 0)))
+
+     (push '("\\.dart\\'" flymake-dart-init flymake-dart-cleanup)
+           flymake-allowed-file-name-masks)
+     ;; Accept negative numbers to work around Dart issue 7495
+     (push '("^[^|]+|[^|]+|[^|]+|file:\\([^|]+\\)|\\([0-9]+\\)|\\([0-9]+\\)|[0-9]+|\\(.*\\)$"
+             1 2 3 4)
+           flymake-err-line-patterns)))
+
+
+;;; Initialization
+
+;;;###autoload (add-to-list 'auto-mode-alist '("\\.dart\\'" . dart-mode))
 
 ;;;###autoload
 (defun dart-mode ()
-  "Major mode for editing Dart code.
-This is a simple example of a separate mode derived from CC Mode to
-support a language with syntax similar to C/C++/ObjC/Java/IDL/Pike.
+  "Major mode for editing Dart files.
 
 The hook `c-mode-common-hook' is run with no args at mode
 initialization, then `dart-mode-hook'.
@@ -142,27 +527,14 @@ Key bindings:
   (c-initialize-cc-mode t)
   (set-syntax-table dart-mode-syntax-table)
   (setq major-mode 'dart-mode
-        mode-name "Dart"
-        local-abbrev-table dart-mode-abbrev-table
-        abbrev-mode t)
+        mode-name "Dart")
   (use-local-map dart-mode-map)
-  ;; `c-init-language-vars' is a macro that is expanded at compile
-  ;; time to a large `setq' with all the language variables and their
-  ;; customized values for our language.
   (c-init-language-vars dart-mode)
-  ;; `c-common-init' initializes most of the components of a CC Mode
-  ;; buffer, including setup of the mode menu, font-lock, etc.
-  ;; There's also a lower level routine `c-basic-common-init' that
-  ;; only makes the necessary initialization to get the syntactic
-  ;; analysis and similar things working.
   (c-common-init 'dart-mode)
-  (easy-menu-add dart-menu)
+  (c-set-style "dart")
   (run-hooks 'c-mode-common-hook)
   (run-hooks 'dart-mode-hook)
   (c-update-modeline))
-
-(add-to-list 'compilation-error-regexp-alist 'dart)
-(add-to-list 'compilation-error-regexp-alist-alist '(dart "Function: '[^']*' url: 'file://\\([^']*\\)' line:\\([0-9]*\\) col:\\([0-9]*\\)" 1 2 3))
 
 (provide 'dart-mode)
 
