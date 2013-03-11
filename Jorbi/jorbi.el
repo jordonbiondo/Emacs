@@ -1,16 +1,58 @@
-;;----------------------------------------------
-;;
-;;             Jordon Biondo
-;;
-;;----------------------------------------------
+;;; jorbi.el --- Custom init library
+;; 
+;; Filename: jorbi.el
+;; Description:
+;; Author: Jordon Biondo
+;; Maintainer:
+;; Created: Mon Mar 11 13:32:38 2013 (-0400)
+;; Version: 1.1
+;; Last-Updated: Mon Mar 11 13:33:13 2013 (-0400)
+;;           By: Jordon Biondo
+;;     Update #: 2
+;; URL:
+;; Doc URL:
+;; Keywords:
+;; Compatibility:
+;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;;; Commentary:
+;; 
+;; 
+;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;;; Change Log:
+;; 
+;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 3, or
+;; (at your option) any later version.
+;; 
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;; 
+;; You should have received a copy of the GNU General Public License
+;; along with this program; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+;; Floor, Boston, MA 02110-1301, USA.
+;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;;; Code:
+
 
 (require 'jorbi-util)
 (require 'jorbi-simple-compile)
 (require 'jorbi-colors)
 (require 'jorbi-buffer-menu)
-;;
-;; Init
-;;
+
+
 (defun jorbi-init()
   "Initiliaze My Settings"
   (interactive)
@@ -25,6 +67,8 @@
   (turn-on 'visual-line-mode)
   ;; no scroll bars
   (turn-off 'scroll-bar-mode)
+  ;; no menu bar
+  (turn-off 'menu-bar-mode)
   ;; show parenthesis matching
   (show-paren-mode 1)
   ;; highlight current line
@@ -32,7 +76,6 @@
   ;; set custom font
   (jorbi-set-font)
   ;; init color theme
-  ;;(jorbi-dark)
   (jorbi-cool)
 
   ;; custom settings for termacs
@@ -44,37 +87,22 @@
   ;; set up go
   (jorbi-add-go-to-path)
   ;; set up path because osx sucks
-  (jorbi-set-up-path)
+  (jorbi-set-up-path))
 
-)
 
-  
-
-;; 
-;; Custom settings for running in terminal
-;;
 (defun jorbi-terminal-settings()
   "Custom settings for running in terminal"
   (jorbi-term-colors)
-  (global-hl-line-mode 0)
-)
-
+  (global-hl-line-mode 0))
 
 				     
-;;
-;; Quick Indent.
-;;
 (defun quick-indent()
   "Indents current line then moves to the next."
   (interactive)
   (indent-according-to-mode)
-  (next-line)
-)
+  (next-line))
 
 
-;;
-;; Init Key Sets.
-;;
 (defun jorbi-init-key-sets()
   "Set up custom keybindings"
   (interactive)
@@ -89,16 +117,13 @@
   (global-set-key (kbd "C-x n") 'jorbi-make)
   
   ;; Set up window switching
-  (if (is-in-terminal) 
+  (if (is-in-terminal)
       (progn
 	(global-set-key (kbd "C-c <left>") 'previous-multiframe-window)
-	(global-set-key (kbd "C-c <right>") 'next-multiframe-window)
-      )
+	(global-set-key (kbd "C-c <right>") 'next-multiframe-window))
     (progn
         (global-set-key (kbd "C-,") 'previous-multiframe-window)
-	(global-set-key (kbd "C-.") 'next-multiframe-window)
-    )
-  )
+	(global-set-key (kbd "C-.") 'next-multiframe-window)))
 
   ;; set up the window resize keys
     (global-set-key (kbd "C-M-s-<right>") 'enlarge-window-horizontally)
@@ -111,8 +136,7 @@
      (global-set-key (kbd "C-M-A-<right>") 'enlarge-window-horizontally)
      (global-set-key (kbd "C-M-A-<left>") 'shrink-window-horizontally)
      (global-set-key (kbd "C-M-A-<up>") 'enlarge-window)
-     (global-set-key (kbd "C-M-A-<down>") 'shrink-window)
-    )
+     (global-set-key (kbd "C-M-A-<down>") 'shrink-window))
   
   ;; quick indent
   (global-set-key (kbd "<C-tab>") 'quick-indent)
@@ -121,27 +145,17 @@
   (global-set-key (kbd "C-M-k") 'jorbi-doc-comment-macro)
   
   ;; kill-line
-  (global-set-key (kbd "C-k") 'kill-line)
-  
-  ;; switch to shell - no longer used
-  ;;(global-set-key (kbd "C-x t") 'jorbi-switch-to-shell)
-)
+  (global-set-key (kbd "C-k") 'kill-line))
 
-;;
-;; Comment macro
-;;
+
 (defun jorbi-doc-comment()
+  "Insert doc comment."
   (interactive)
   (cond
    ((string= mode-name "Emacs-Lisp") (jorbi-el-doc-comment-macro))
-   (t (jorbi-doc-comment-macro))
-  )
-)
+   (t (jorbi-doc-comment-macro))))
 
-;;
-;; Macros
-;;
-;; elisp document comment
+;; lisp style
 (fset 'jorbi-el-doc-comment-macro
    [?\C-a return ?\C-p tab ?\; ?\; return ?\; ?\; return ?\; ?\; up ? ])
 
@@ -150,25 +164,6 @@
    [?\C-a return ?\C-p tab ?/ ?* return ?  ?* return ?  ?* ?/ ?\C-p ? ])
 
 
-
-;;
-;; Switch to termainl buffer - no longer used
-;;
-
-;; (defun jorbi-switch-to-shell()
-;;   "Switches to the shell buffer if it exists"
-;;   (interactive)
-;;   (if (get-buffer "*shell*")
-;;       (switch-to-buffer-other-window "*shell*")
-;;     ;;(term "/bin/bash")
-;;   )
-;; )
-
-
-
-;;
-;; Set font
-;;
 (defun jorbi-set-font()
   "Sets the font depeding on the system and editor"
   (interactive)
@@ -176,61 +171,34 @@
      (mac-eval
      ;;(set-face-font 'default "-apple-Optima-medium-normal-normal-*-*-*-*-*-p-0-iso10646-1")
      ;;(set-face-font 'default  "-apple-Source_Code_Pro-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
-      (set-default-font "-apple-Inconsolata-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
-     )
-   )
-)
+      (set-default-font "-apple-Inconsolata-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1"))))
 
 
-;;
-;; Directory for go 
-;;
-(defvar go-bin-dir "/usr/local/go/bin/")
+(defvar go-bin-dir "/usr/local/go/bin/"
+  "Directory where the GO binary is located.")
 
 
-;;
-;; Add Go to PATH
-;;
 (defun jorbi-add-go-to-path()
   "Set up the go bin directory\nNeeded because osx has probelems"
   (interactive)
   (if (and (string= system-type "darwin")
-	   (not (string-match go-bin-dir (getenv "PATH")))
-      )
-      (setenv "PATH" (concat (concat (getenv "PATH") ":") go-bin-dir))
-  )
-  (print "Go is already set up")
-)
+	   (not (string-match go-bin-dir (getenv "PATH"))))
+      (setenv "PATH" (concat (concat (getenv "PATH") ":") go-bin-dir)))
+  (print "Go is already set up"))
 
 
-;;
-;; add /usr/local/bin to path
-;;
 (defun jorbi-set-up-path()
+  "Hackishly set up the path because osx sucks."
   (interactive)
   (mac-eval
    (if (not (string-match "/usr/local/bin" (getenv "PATH")))
        (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-     (print "/usr/local/bin is already set up")
-   )
+     (print "/usr/local/bin is already set up"))
    (if (not (string-match "/sw/bin" (getenv "PATH")))
        (setenv "PATH" (concat (getenv "PATH") ":/sw/bin"))
-     (print "/sw/bin already set up")
-   ) 
-  )
-  ;; (if (and (string= system-type "darwin")
-  ;; 	   (not (string-match "/usr/local/bin" (getenv "PATH")))
-  ;; 	   )
-  ;;     (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-  ;;   (print "/usr/local/bin is already set up")
-  ;; )
-  ;; (if (and (string= system-type "darwin")
-  ;; 	   (not (string-match "/sw/bin" (getenv "PATH")))
-  ;; 	   )
-  ;;     (setenv "PATH" (concat (getenv "PATH") ":/sw/bin"))
-  ;;   (print "/sw/bin already set up")
-  ;;   )
-  
-)
+     (print "/sw/bin already set up"))))
 
 (provide 'jorbi)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; jorbi.el ends here
