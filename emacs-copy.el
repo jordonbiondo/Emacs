@@ -1,9 +1,11 @@
 ;; Require std cl libs
-(require 'cl)
+;;(require 'cl)
+(require 'cl-lib)
 
 ;; No Startup Screen
 (custom-set-variables
  '(inhibit-startup-screen t)
+ '(initial-scratch-message ";;scratch")
 )
 
 
@@ -101,6 +103,8 @@
  (setq inferior-lisp-program "/sw/bin/sbcl")
  (autoload 'slime-selector "slime" t)
 )
+
+
 (linux-eval
  (setq inferior-lisp-program "/usr/bin/clisp")
  (autoload 'slime-selector "slime" t)
@@ -128,7 +132,9 @@
 
 ;; Header 2.
 (require 'header2)
-(set-face-attribute 'default nil :height 100)
+;(set-face-attribute 'default nil :height 100)
+
+(require 'smooth-scrolling)
 
 (require 'powerline)
 (powerline-default)
