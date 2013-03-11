@@ -1,12 +1,12 @@
 (require 'stripe-buffer)
 
 (font-lock-add-keywords 'buffer-menu-mode
-  '(("\\<\\(~/Desktop/\\):" 1 font-lock-warning-face prepend)
-    ("~/Git/*" . font-lock-keyword-face)))
+			'(("\\<\\(~/Desktop/\\):" 1 font-lock-warning-face prepend)
+			  ("~/Git/*" . font-lock-keyword-face)))
 
 (setq buffer-menu-buffer-font-lock-keywords
       '(
-	;;("^....[*]Man .*Man.*"   . font-lock-variable-name-face)       ;Man page
+	;("^....[*]Man .*Man.*"   . font-lock-variable-name-face)       ;Man page
 	(".*magit.*"             . font-lock-preprocessor-face)
         (".*Dired.*"             . font-lock-comment-face)             ; Dired
         ("^....[*]shell.*"       . font-lock-warning-face)             ; Shell

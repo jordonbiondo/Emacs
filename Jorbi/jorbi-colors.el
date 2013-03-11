@@ -1,4 +1,54 @@
+;;; jorbi-colors.el --- Custom color themes
+;; 
+;; Filename: jorbi-colors.el
+;; Description:
+;; Author: Jordon Biondo
+;; Maintainer:
+;; Created: Mon Mar 11 12:41:21 2013 (-0400)
+;; Version: .2
+;; Last-Updated:
+;;           By:
+;;     Update #: 2
+;; URL:
+;; Doc URL:
+;; Keywords:
+;; Compatibility:
+;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;;; Commentary:
+;; 
+;; Custom colors
+;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;;; Change Log:
+;; 
+;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 3, or
+;; (at your option) any later version.
+;; 
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;; 
+;; You should have received a copy of the GNU General Public License
+;; along with this program; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+;; Floor, Boston, MA 02110-1301, USA.
+;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;;; Code:
+
+
 (defun jorbi-cool ()
+  "Apply the `jorbi-cool' theme."
   (interactive)
   (color-theme-install
    '(jorbi-cool
@@ -26,8 +76,8 @@
      (mode-line-inactive ((t (:background "cornsilk4"))))
      (font-lock-variable-name-face ((t (:foreground "#baba36"))))
      (minibuffer-prompt ((t (:foreground "#fffe0a" :bold t))))
-     (font-lock-warning-face ((t (:foreground "red" :bold t))))
-     )))
+     (font-lock-warning-face ((t (:foreground "red" :bold t)))))))
+
 
 
 ;;
@@ -36,7 +86,7 @@
 (defun jorbi-dark()
   "Set the dark color theme"
   (interactive)
-  ;; maybe not the best 
+  ;; maybe not the best
   (set-face-background 'default "#272822")
   ;;(set-face-background 'default "#gray10")
   (set-face-foreground 'default "gray80")
@@ -52,59 +102,45 @@
   (set-face-foreground 'font-lock-string-face "#E6DB74")
   (set-face-foreground 'show-paren-match "gray10")
   (set-cursor-color "orange")
-
-
+  
   ;; Org mode
-  (add-hook 'org-mode-hook 
-	    (lambda() 
+  (add-hook 'org-mode-hook
+	    (lambda()
 	      (progn
 		(set-face-foreground 'org-todo "#AB7B71")
 		(set-face-foreground 'org-done "#7174AB")
-		(set-face-foreground 'org-level-4 "#E36410")
-		)
-	      )
-  )
-
+		(set-face-foreground 'org-level-4 "#E36410"))))
+  
   (add-hook 'compilation-mode-hook
 	    (lambda()
 	      (progn
-		(set-face-foreground 'compilation-error "red")
-		)
-	      )
-  )
-
+		(set-face-foreground 'compilation-error "red"))))
+  
   (add-hook 'eshell-mode-hook
 	    (lambda()
 	      (progn
 		(set-face-foreground 'eshell-prompt-face (face-foreground 'font-lock-keyword-face))
 		(set-face-foreground 'eshell-ls-directory-face (face-foreground 'font-lock-function-name-face))
-		(set-face-foreground 'eshell-ls-backup-face (face-foreground 'font-lock-variable-name-face))
-				     
-	      )
-	    )
-   )
-  t
-)
+		(set-face-foreground 'eshell-ls-backup-face (face-foreground 'font-lock-variable-name-face)))))
+  t)
 
-;;
-;; special colors for terminals
-;;
+
+
 (defun jorbi-term-colors()
+  "Custom colors for running in a terminal."
   (interactive)
   (jorbi-cool)
   (set-face-background 'default "white")
   (set-face-foreground 'default "black")
-  
   (set-face-foreground 'font-lock-function-name-face "green")
-
   (set-face-foreground 'mode-line "white")
   (set-face-background 'mode-line "black")
   (set-face-foreground 'mode-line-inactive "black")
   (set-face-background 'mode-line-inactive "cornsilk4")
-  
-  (set-face-foreground 'font-lock-comment-face "red1")
-)
+  (set-face-foreground 'font-lock-comment-face "red1"))
+
 
 (provide 'jorbi-colors)
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; jorbi-colors.el ends here
