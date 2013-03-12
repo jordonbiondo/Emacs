@@ -58,6 +58,7 @@
 
 (autoload 'twittering-mode "twittering-mode" "twitter" nil)
 
+
 ;; Web Mode
 (autoload 'web-mode "web-mode" "web" nil)
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
@@ -132,11 +133,19 @@
 
 ;; Header 2.
 (require 'header2)
-;(set-face-attribute 'default nil :height 100)
 
-(require 'smooth-scrolling)
+
+;;(require 'smooth-scrolling)
 
 (require 'powerline)
 (powerline-default)
 (set-face-foreground 'powerline-inactive1 "gray70")
 (set-face-foreground 'powerline-active1 "gray70")
+
+
+(require 'linum+)
+(global-linum-mode)
+(set-face-attribute 'linum nil :height 90)
+(set-face-attribute 'linum+-current-line-face nil :height 100)
+(setq scroll-margin 4)
+
