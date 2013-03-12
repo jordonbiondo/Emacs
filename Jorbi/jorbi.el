@@ -103,6 +103,7 @@
   (next-line))
 
 
+
 (defun jorbi-init-key-sets()
   "Set up custom keybindings"
   (interactive)
@@ -142,17 +143,26 @@
   (global-set-key (kbd "<C-tab>") 'quick-indent)
   
   ;; doc comment macro
-  (global-set-key (kbd "C-M-k") 'jorbi-doc-comment-macro)
+  (global-set-key (kbd "C-M-k") 'jorbi-doc-comment)
   
   ;; kill-line
   (global-set-key (kbd "C-k") 'kill-line))
+
+
+(defun insert-doc-comment()
+  (interactive)
+  (beginning-of-line)
+  (insert ";;\n;; \n;;\n")
+  (forward-line -2)
+  (end-of-line))
 
 
 (defun jorbi-doc-comment()
   "Insert doc comment."
   (interactive)
   (cond
-   ((string= mode-name "Emacs-Lisp") (jorbi-el-doc-comment-macro))
+   ((equal mode-name 'Emacs-Lisp) 
+    (jorbi-el-doc-comment-macro))
    (t (jorbi-doc-comment-macro))))
 
 ;; lisp style
