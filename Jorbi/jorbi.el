@@ -143,7 +143,7 @@
   (global-set-key (kbd "<C-tab>") 'quick-indent)
   
   ;; doc comment macro
-  (global-set-key (kbd "C-M-k") 'jorbi-doc-comment)
+  (global-set-key (kbd "C-M-k") 'jorbi-doc-comment-macro)
   
   ;; kill-line
   (global-set-key (kbd "C-k") 'kill-line))
