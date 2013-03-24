@@ -36,6 +36,7 @@
 (add-to-list 'load-path (jorbi-path "Jorbi/"))
 (add-to-list 'load-path (jorbi-vendor "Lua-Emacs/"))
 (add-to-list 'load-path (jorbi-vendor "slime/"))
+(add-to-list 'load-path (jorbi-vendor "ruby/"))
 (add-to-list 'load-path (jorbi-vendor "Mathematica/"))
 (add-to-list 'load-path (jorbi-vendor "magit/"))
 (add-to-list 'load-path (jorbi-vendor "CSharp/"))
@@ -95,21 +96,22 @@
 (mac-eval
  (require 'go-mode-load)
  (autoload 'go-mode "go-mode" "go" nil)
- (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-;; (require 'go-mode)
-)
+ ;; (require 'go-mode)
+ (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
+
+
 
 ;; SLIME
 (mac-eval
  (setq inferior-lisp-program "/sw/bin/sbcl")
- (autoload 'slime-selector "slime" t)
-)
+ (autoload 'slime-selector "slime" t))
+
 
 
 (linux-eval
  (setq inferior-lisp-program "/usr/bin/clisp")
- (autoload 'slime-selector "slime" t)
-)
+ (autoload 'slime-selector "slime" t))
+
 
 ;; Lua Mode
 (autoload 'lua-mode "lua-mode" "lua" nil)
@@ -143,9 +145,10 @@
 (set-face-foreground 'powerline-active1 "gray70")
 
 
-(require 'linum+)
-(global-linum-mode)
-(set-face-attribute 'linum nil :height 90)
-(set-face-attribute 'linum+-current-line-face nil :height 100)
-(setq scroll-margin 4)
+;;(require 'linum+)
+;;(global-linum-mode)
+;;(set-face-attribute 'linum nil :height 90)
+;;(set-face-attribute 'linum+-current-line-face nil :height 100)
+;;(setq scroll-margin 4)
 
+(require 'ruby-setup)
