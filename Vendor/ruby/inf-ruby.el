@@ -313,7 +313,8 @@ Must not contain ruby meta characters.")
         (set-marker m (point))))
     (comint-send-string (ruby-proc) (format "eval <<'%s', nil, %S, %d\n" term file line))
     (comint-send-region (ruby-proc) start end)
-    (comint-send-string (ruby-proc) (concat "\n" term "\n"))))
+    (comint-send-string (ruby-proc) (concat "\n" term "\n"))
+    ))
 
 (defun ruby-send-definition ()
   "Send the current definition to the inferior Ruby process."
