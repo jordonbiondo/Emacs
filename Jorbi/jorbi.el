@@ -108,16 +108,12 @@
 	(delete-trailing-whitespace))))
 
 (defun newline-remove-whitespace()
-  "Run newline, remove trailing whitespace from the previous line"
-  (interactive *P)
+  (interactive)
   (newline)
   ;; kill whitespace above
-  (save-excursion
-    (previous-line)
-    (end-of-line)
-    (delete-trailing-whitespace)))
+  (delete-trailing-whitespace))
 
-(global-set-key (kbd "RET") 'newline-remove-whitespace)
+
 
 
 (defun jorbi-init-key-sets()
@@ -157,6 +153,9 @@
 
   ;; quick indent
   (global-set-key (kbd "<C-tab>") 'quick-indent)
+
+  ;; return kills whitespace in buffer
+  (global-set-key (kbd "RET") 'newline-remove-whitespace)
 
   ;; doc comment macro
   (global-set-key (kbd "C-M-k") 'jorbi-doc-comment-macro)
