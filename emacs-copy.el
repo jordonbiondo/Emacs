@@ -1,12 +1,16 @@
 ;; Require std cl libs
-;;(require 'cl)
-(require 'cl-lib)
+(if (and (>= emacs-major-version 24) (>= emacs-minor-version 3))
+    ;; emacs 24.3 changed to cl-lib
+    (require 'cl-lib)
+  (require 'cl))
 
 ;; No Startup Screen
 (custom-set-variables
  '(inhibit-startup-screen t)
  '(initial-scratch-message ";;scratch")
 )
+
+
 
 
 ;; repo location
@@ -138,11 +142,12 @@
 
 
 ;;(require 'smooth-scrolling)
-
-(require 'powerline)
-(powerline-default)
-(set-face-foreground 'powerline-inactive1 "gray70")
-(set-face-foreground 'powerline-active1 "gray70")
+(if (>= emacs-major-version 24)
+    (progn
+      (require 'powerline)
+      (powerline-default)
+      (set-face-foreground 'powerline-inactive1 "gray70")
+      (set-face-foreground 'powerline-active1 "gray70")))
 
 
 ;;(require 'linum+)
@@ -152,3 +157,4 @@
 ;;(setq scroll-margin 4)
 
 (require 'ruby-setup)
+(require 'erc-setup)
