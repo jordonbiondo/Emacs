@@ -6,13 +6,13 @@
 ;; Maintainer:
 ;; Created: Mon Mar 25 14:11:10 2013 (-0400)
 ;; Version:
-;; Last-Updated: Mon Mar 25 14:20:49 2013 (-0400)
+;; Last-Updated: Mon Mar 25 15:30:55 2013 (-0400)
 ;;           By: Jordon Biondo
-;;     Update #: 2
+;;     Update #: 3
 ;; URL:
 ;; Doc URL:
 ;; Keywords:
-;; Compatibility:
+;; Compatibility: Emacs 24.x
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
