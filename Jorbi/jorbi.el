@@ -95,14 +95,17 @@
   (jorbi-term-colors)
   (global-hl-line-mode 0))
 
-				     
+
 (defun quick-indent()
-  "Indents current line then moves to the next."
+  "Indents current line then moves to the next, won't insert whitespace"
   (interactive)
   (indent-according-to-mode)
-  (next-line))
-
-
+  (next-line)
+  (save-excursion
+    (previous-line)
+    (beginning-of-line)
+    (if (looking-at "^[ \t]*$")
+	(delete-trailing-whitespace))))
 
 (defun jorbi-init-key-sets()
   "Set up custom keybindings"
