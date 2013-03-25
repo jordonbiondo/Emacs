@@ -4,3 +4,4 @@
 *.elc
 .DS_Store
 .*#
+/Vendor/slime/.cvsignore

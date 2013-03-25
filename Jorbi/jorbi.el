@@ -1,5 +1,5 @@
 ;;; jorbi.el --- Custom init library
-;; 
+;;
 ;; Filename: jorbi.el
 ;; Description:
 ;; Author: Jordon Biondo
@@ -13,37 +13,37 @@
 ;; Doc URL:
 ;; Keywords:
 ;; Compatibility:
-;; 
+;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;;; Commentary:
-;; 
-;; 
-;; 
+;;
+;;
+;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;;; Change Log:
-;; 
-;; 
+;;
+;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
 ;; published by the Free Software Foundation; either version 3, or
 ;; (at your option) any later version.
-;; 
+;;
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ;; General Public License for more details.
-;; 
+;;
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 ;; Floor, Boston, MA 02110-1301, USA.
-;; 
+;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;;; Code:
 
 
@@ -107,19 +107,32 @@
     (if (looking-at "^[ \t]*$")
 	(delete-trailing-whitespace))))
 
+(defun newline-remove-whitespace()
+  "Run newline, remove trailing whitespace from the previous line"
+  (interactive *P)
+  (newline)
+  ;; kill whitespace above
+  (save-excursion
+    (previous-line)
+    (end-of-line)
+    (delete-trailing-whitespace)))
+
+(global-set-key (kbd "RET") 'newline-remove-whitespace)
+
+
 (defun jorbi-init-key-sets()
   "Set up custom keybindings"
   (interactive)
-  
+
   ;; open the buffer menu
   (global-set-key (kbd "C-x l") 'buffer-menu)
-  
+
   ;; run simple compile
   (global-set-key (kbd "C-x b") 'jorbi-simple-compile)
-  
+
   ;; run makefile
   (global-set-key (kbd "C-x n") 'jorbi-make)
-  
+
   ;; Set up window switching
   (if (is-in-terminal)
       (progn
@@ -141,13 +154,13 @@
      (global-set-key (kbd "C-M-A-<left>") 'shrink-window-horizontally)
      (global-set-key (kbd "C-M-A-<up>") 'enlarge-window)
      (global-set-key (kbd "C-M-A-<down>") 'shrink-window))
-  
+
   ;; quick indent
   (global-set-key (kbd "<C-tab>") 'quick-indent)
-  
+
   ;; doc comment macro
   (global-set-key (kbd "C-M-k") 'jorbi-doc-comment-macro)
-  
+
   ;; kill-line
   (global-set-key (kbd "C-k") 'kill-line))
 
@@ -164,7 +177,7 @@
   "Insert doc comment."
   (interactive)
   (cond
-   ((equal mode-name 'Emacs-Lisp) 
+   ((equal mode-name 'Emacs-Lisp)
     (jorbi-el-doc-comment-macro))
    (t (jorbi-doc-comment-macro))))
 

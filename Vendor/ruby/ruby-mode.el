@@ -1447,6 +1447,7 @@ buffer position `limit' or the end of the buffer."
      ;; expression expansion
      '("#\\({[^}\n\\\\]*\\(\\\\.[^}\n\\\\]*\\)*}\\|\\(\\$\\|@\\|@@\\)\\(\\w\\|_\\)+\\)"
        0 font-lock-variable-name-face t)
+     '("[^_]\\<\\(private\\|public\\)\\>\\([^_]\\|$\\)"  1 font-lock-preprocessor-face)
      ;; warn lower camel case
      ;'("\\<[a-z]+[a-z0-9]*[A-Z][A-Za-z0-9]*\\([!?]?\\|\\>\\)"
      ;  0 font-lock-warning-face)
