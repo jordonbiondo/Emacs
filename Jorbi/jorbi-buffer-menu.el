@@ -1,5 +1,6 @@
 (require 'stripe-buffer)
 
+
 (font-lock-add-keywords 'buffer-menu-mode
 			'(("\\<\\(~/Desktop/\\):" 1 font-lock-warning-face prepend)
 			  ("~/Git/*" . font-lock-keyword-face)))
@@ -26,6 +27,8 @@
     (font-lock-fontify-buffer)))
 
 (add-hook 'buffer-menu-mode-hook 'buffer-menu-custom-font-lock)
+;; no whitespace in here
+(add-hook 'Buffer-menu-mode-hook '(lambda() (setq show-trailing-whitespace nil)))
 
 (add-hook 'buffer-menu-mode-hook 'stripe-buffer-mode)
 (add-hook 'buffer-menu-mode-hook 'auto-revert-mode)
