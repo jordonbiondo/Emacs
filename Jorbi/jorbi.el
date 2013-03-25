@@ -51,11 +51,14 @@
 (require 'jorbi-simple-compile)
 (require 'jorbi-colors)
 (require 'jorbi-buffer-menu)
+(require 'jorbi-navigation)
 
 
 (defun jorbi-init()
   "Initiliaze My Settings"
   (interactive)
+  ;; show whitespace
+  (setq-default show-trailing-whitespace t)
   ;; no bell
   (setq ring-bell-function #'ignore)
   ;; no tool bar
@@ -96,22 +99,22 @@
   (global-hl-line-mode 0))
 
 
-(defun quick-indent()
-  "Indents current line then moves to the next, won't insert whitespace"
-  (interactive)
-  (indent-according-to-mode)
-  (next-line)
-  (save-excursion
-    (previous-line)
-    (beginning-of-line)
-    (if (looking-at "^[ \t]*$")
-	(delete-trailing-whitespace))))
+;; (defun quick-indent()
+;;   "Indents current line then moves to the next, won't insert whitespace"
+;;   (interactive)
+;;   (indent-according-to-mode)
+;;   (next-line)
+;;   (save-excursion
+;;     (previous-line)
+;;     (beginning-of-line)
+;;     (if (looking-at "^[ \t]*$")
+;; 	(delete-trailing-whitespace))))
 
-(defun newline-remove-whitespace()
-  (interactive)
-  (newline)
-  ;; kill whitespace above
-  (delete-trailing-whitespace))
+;; (defun newline-remove-whitespace()
+;;   (interactive)
+;;   (newline)
+;;   ;; kill whitespace above
+;;   (delete-trailing-whitespace))
 
 
 
@@ -151,17 +154,19 @@
      (global-set-key (kbd "C-M-A-<up>") 'enlarge-window)
      (global-set-key (kbd "C-M-A-<down>") 'shrink-window))
 
-  ;; quick indent
-  (global-set-key (kbd "<C-tab>") 'quick-indent)
 
-  ;; return kills whitespace in buffer
-  (global-set-key (kbd "RET") 'newline-remove-whitespace)
+    ;; navigation keys
+    (require 'jorbi-navigation)
+    (global-set-key (kbd "<C-tab>") 'quick-indent)
+    (global-set-key (kbd "C-n") 'next-line-remove-whitespace)
+    (global-set-key (kbd "C-p") 'previous-line-remove-whitespace)
+    (global-set-key (kbd "RET") 'newline-remove-whitespace)
 
-  ;; doc comment macro
-  (global-set-key (kbd "C-M-k") 'jorbi-doc-comment-macro)
+    ;; doc comment macro
+    (global-set-key (kbd "C-M-k") 'jorbi-doc-comment-macro)
 
-  ;; kill-line
-  (global-set-key (kbd "C-k") 'kill-line))
+    ;; kill-line
+    (global-set-key (kbd "C-k") 'kill-line))
 
 
 (defun insert-doc-comment()
