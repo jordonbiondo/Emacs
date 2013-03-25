@@ -37,5 +37,8 @@
 ;; add require keyword
 (font-lock-add-keywords 'ruby-mode 
 			'(("^require " . font-lock-preprocessor-face)))
+
+(eval-after-load 'ruby-mode
+  '(define-key ruby-mode-map (kbd "C-x b") 'ruby-send-definition))
 	     
 (provide 'ruby-setup)
