@@ -17,11 +17,11 @@
 (defvar jorbi-git-path "~/Git/Emacs/")
 
 ;; add lib folder from repo
-(defun jorbi-path(&optional p) 
+(defun jorbi-path(&optional p)
   (concat jorbi-git-path p)
 )
 ;; add vendor lib
-(defun jorbi-vendor(&optional p) 
+(defun jorbi-vendor(&optional p)
   (concat jorbi-git-path (concat "Vendor/" p))
 )
 
@@ -29,7 +29,7 @@
 
 ;; set up load path
 (add-to-list 'load-path (jorbi-vendor))
-;;(setq load-path (append load-path 
+;;(setq load-path (append load-path
 ;;			'(
 (add-to-list 'load-path (jorbi-path))
 (add-to-list 'load-path (jorbi-vendor))

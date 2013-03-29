@@ -6,9 +6,9 @@
 ;; Maintainer:
 ;; Created: Mon Mar 25 14:11:10 2013 (-0400)
 ;; Version:
-;; Last-Updated: Mon Mar 25 15:30:55 2013 (-0400)
+;; Last-Updated: Mon Mar 25 15:31:10 2013 (-0400)
 ;;           By: Jordon Biondo
-;;     Update #: 3
+;;     Update #: 4
 ;; URL:
 ;; Doc URL:
 ;; Keywords:
@@ -67,8 +67,9 @@
 (defun newline-remove-whitespace()
   "Delete's trailing white space in current and previous line, and inserts a newline"
   (interactive)
-  (delete-trailing-whitespace-around-point -1)
-  (newline))
+    (newline)
+    (delete-trailing-whitespace-around-point -1))
+
 
 (defun previous-line-remove-whitespace(&optional arg try-vscroll)
   "Move to next line, and delete trailing white space whitespace in previous and current lines"
