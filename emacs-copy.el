@@ -125,6 +125,11 @@
 ;; Mathematica Mode
 (setq mathematica-command-line "/usr/local/bin/math")
 
+;; D mode
+(autoload 'd-mode "d-mode" "D" nil)
+(add-to-list 'auto-mode-alist '("\\.d\\'" . d-mode))
+
+
 ;; C# MODE
 (require 'flymake)
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
