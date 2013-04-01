@@ -8,7 +8,7 @@
 ;; Version: .2
 ;; Last-Updated:
 ;;           By:
-;;     Update #: 2
+;;     Update #: 3
 ;; URL:
 ;; Doc URL:
 ;; Keywords:
@@ -64,7 +64,8 @@
      (mode-line ((t (:foreground "#191919" :background "cornsilk3"))))
      (region ((t (:background "#303030"))))
      (font-lock-builtin-face ((t (:foreground "#528fd1"))))
-     (font-lock-comment-face ((t (:foreground "#454545"))))
+     ;;(font-lock-comment-face ((t (:foreground "#454545"))))
+     (font-lock-comment-face ((t (:foreground "gray60"))))
      (font-lock-function-name-face ((t (:foreground "#6aaf50"))))
      (font-lock-keyword-face ((t (:foreground "#5180b3"))))
      (font-lock-string-face ((t (:foreground "#bdbc61"))))
