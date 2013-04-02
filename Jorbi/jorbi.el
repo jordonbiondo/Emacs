@@ -58,11 +58,11 @@
   "Initiliaze My Settings"
   (interactive)
   ;; show whitespace
-  (setq-default show-trailing-whitespace t)
+  ;;(setq-default show-trailing-whitespace t)
   ;; no bell
   (setq ring-bell-function #'ignore)
   ;; no tool bar
-  (turn-off 'tool-bar-mode)
+  ;;(turn-off 'tool-bar-mode)
   ;; no tabs
   (turn-off 'tabbar-mode)
   ;; word wrap
@@ -88,9 +88,9 @@
   ;; key bindings
   (jorbi-init-key-sets)
   ;; set up go
-  (jorbi-add-go-to-path)
+  ;;(jorbi-add-go-to-path)
   ;; set up path because osx sucks
-  (jorbi-set-up-path))
+  ;;(jorbi-set-up-path))
 
 
 (defun jorbi-terminal-settings()
@@ -146,7 +146,6 @@
     (global-set-key (kbd "C-M-s-<left>") 'shrink-window-horizontally)
     (global-set-key (kbd "C-M-s-<up>") 'enlarge-window)
     (global-set-key (kbd "C-M-s-<down>") 'shrink-window)
-
 
     (aqua-eval
      (global-set-key (kbd "C-M-A-<right>") 'enlarge-window-horizontally)
@@ -204,29 +203,29 @@
       (set-default-font "-apple-Inconsolata-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1"))))
 
 
-(defvar go-bin-dir "/usr/local/go/bin/"
-  "Directory where the GO binary is located.")
+;; (defvar go-bin-dir "/usr/local/go/bin/"
+;;   "Directory where the GO binary is located.")
 
 
-(defun jorbi-add-go-to-path()
-  "Set up the go bin directory\nNeeded because osx has probelems"
-  (interactive)
-  (if (and (string= system-type "darwin")
-	   (not (string-match go-bin-dir (getenv "PATH"))))
-      (setenv "PATH" (concat (concat (getenv "PATH") ":") go-bin-dir)))
-  (print "Go is already set up"))
+;; (defun jorbi-add-go-to-path()
+;;   "Set up the go bin directory\nNeeded because osx has probelems"
+;;   (interactive)
+;;   (if (and (string= system-type "darwin")
+;; 	   (not (string-match go-bin-dir (getenv "PATH"))))
+;;       (setenv "PATH" (concat (concat (getenv "PATH") ":") go-bin-dir)))
+;;   (print "Go is already set up"))
 
 
-(defun jorbi-set-up-path()
-  "Hackishly set up the path because osx sucks."
-  (interactive)
-  (mac-eval
-   (if (not (string-match "/usr/local/bin" (getenv "PATH")))
-       (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-     (print "/usr/local/bin is already set up"))
-   (if (not (string-match "/sw/bin" (getenv "PATH")))
-       (setenv "PATH" (concat (getenv "PATH") ":/sw/bin"))
-     (print "/sw/bin already set up"))))
+;; (defun jorbi-set-up-path()
+;;   "Hackishly set up the path because osx sucks."
+;;   (interactive)
+;;   (mac-eval
+;;    (if (not (string-match "/usr/local/bin" (getenv "PATH")))
+;;        (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+;;      (print "/usr/local/bin is already set up"))
+;;    (if (not (string-match "/sw/bin" (getenv "PATH")))
+;;        (setenv "PATH" (concat (getenv "PATH") ":/sw/bin"))
+;;      (print "/sw/bin already set up"))))
 
 (provide 'jorbi)
 

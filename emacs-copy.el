@@ -33,23 +33,16 @@
 ;;			'(
 (add-to-list 'load-path (jorbi-path))
 (add-to-list 'load-path (jorbi-vendor))
-(add-to-list 'load-path (jorbi-path "Mars/"))
 ;; simpel gv
-(add-to-list 'load-path (jorbi-path "simplegv-mode/")) ;; SIMPLE GV
 ;;
 (add-to-list 'load-path (jorbi-path "Jorbi/"))
 (add-to-list 'load-path (jorbi-vendor "Lua-Emacs/"))
-(add-to-list 'load-path (jorbi-vendor "slime/"))
 (add-to-list 'load-path (jorbi-vendor "ruby/"))
 (add-to-list 'load-path (jorbi-vendor "Mathematica/"))
 (add-to-list 'load-path (jorbi-vendor "magit/"))
 (add-to-list 'load-path (jorbi-vendor "CSharp/"))
 (add-to-list 'load-path "~/Git/web-mode/")
 (add-to-list 'load-path (jorbi-vendor "color-theme/"))
-(add-to-list 'load-path (jorbi-vendor "jdee/lisp/"))
-(add-to-list 'load-path (jorbi-vendor "emacs-jabber/"))
-(add-to-list 'load-path (jorbi-vendor "header2/"))
-(add-to-list 'load-path "/usr/local/go/misc/emacs/")
 (add-to-list 'load-path (jorbi-vendor "auto-complete-install/"))
 ;;			 )
 ;;		 )
@@ -97,11 +90,6 @@
 
 
 ;; Go Mode
-(mac-eval
- (require 'go-mode-load)
- (autoload 'go-mode "go-mode" "go" nil)
- ;; (require 'go-mode)
- (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
 
 
 
@@ -143,7 +131,7 @@
 
 
 ;; Header 2.
-(require 'header2)
+;;(require 'header2)
 
 
 ;;(require 'smooth-scrolling)
@@ -161,5 +149,5 @@
 ;;(set-face-attribute 'linum+-current-line-face nil :height 100)
 ;;(setq scroll-margin 4)
 
-(require 'ruby-setup)
-(require 'erc-setup)
+;;(require 'ruby-setup)
+;;(require 'erc-setup)
