@@ -163,3 +163,5 @@
 
 (require 'ruby-setup)
 (require 'erc-setup)
+(linux-eval
+ (set-face-attribute 'default nil :height 120))
