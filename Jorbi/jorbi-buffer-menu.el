@@ -31,6 +31,6 @@
 (add-hook 'Buffer-menu-mode-hook '(lambda() (setq show-trailing-whitespace nil)))
 
 (add-hook 'buffer-menu-mode-hook 'stripe-buffer-mode)
-(add-hook 'buffer-menu-mode-hook 'auto-revert-mode)
+;(add-hook 'buffer-menu-mode-hook 'auto-revert-mode)
 
 (provide 'jorbi-buffer-menu)
