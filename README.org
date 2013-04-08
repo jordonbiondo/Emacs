@@ -1,7 +1,9 @@
 * Emacs Configuration
   This is my personal Emacs configuration
-  - Currently running on Emacs 24.2.1
-  - .emacs assumes this repo is in ~/Git/
+  - Currently running on Emacs 24.3.1
+  - Compatable with 23+ (tested in Aquamacs)
+  - The config isn't .emacs.d ready, the .emacs copy assumes this repo is in ~/Git/ and modifies the load-path accordingly.
+
 
 
 
