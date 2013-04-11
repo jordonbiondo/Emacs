@@ -163,3 +163,9 @@
 
 (require 'ruby-setup)
 (require 'erc-setup)
+
+
+;;
+;;  Steve, change this to your liking
+;;
+(set-face-attribute 'default nil :height 120)
