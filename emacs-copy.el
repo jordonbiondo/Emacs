@@ -68,6 +68,7 @@
 (autoload 'web-mode "web-mode" "web" nil)
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
@@ -91,9 +92,9 @@
 (add-to-list 'auto-mode-alist '("\\.jlt\\'" . simplegv-mode))
 
 ;; Mars Functions
-;;(autoload 'mars-init "mars" "Mars" nil)
-;;(add-to-list 'auto-mode-alist '("\\(\\.asm\\|\\.a\\|\\.s\\)\\'" . mars-init))
-;;(require 'mars)
+(autoload 'mars-init "mars" "Mars" nil)
+(add-to-list 'auto-mode-alist '("\\(\\.asm\\|\\.a\\|\\.s\\)\\'" . mars-init))
+(require 'mars)
 
 
 ;; Go Mode
@@ -109,7 +110,6 @@
 (mac-eval
  (setq inferior-lisp-program "/sw/bin/sbcl")
  (autoload 'slime-selector "slime" t))
-
 
 
 (linux-eval
@@ -163,5 +163,3 @@
 
 (require 'ruby-setup)
 (require 'erc-setup)
-(linux-eval
- (set-face-attribute 'default nil :height 120))
