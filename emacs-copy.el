@@ -102,13 +102,19 @@
     (require 'cl-lib)
   (require 'cl))
 
+
 ;; No Startup Screen
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
  '(initial-scratch-message ";;scratch")
-)
+ '(send-mail-function (quote smtpmail-send-it)))
 
-(display-graphic-p)
+
+
 
 
 ;; repo location
@@ -122,7 +128,6 @@
 (defun jorbi-vendor(&optional p)
   (concat jorbi-git-path (concat "Vendor/" p))
 )
-
 
 
 ;; set up load path
@@ -259,18 +264,21 @@
       (set-face-foreground 'powerline-active1 "gray70")))
 
 
+
+;;
+;; Custom mode configs
+;;
+(require 'jorbi-setups)
+
 ;;(require 'linum+)
 ;;(global-linum-mode)
 ;;(set-face-attribute 'linum nil :height 90)
 ;;(set-face-attribute 'linum+-current-line-face nil :height 100)
 ;;(setq scroll-margin 4)
 
-(require 'ruby-setup)
-(require 'erc-setup)
-
 
 ;;
-;;  Steve, change this to your liking
+;;  font sizes
 ;;
 
 (mac-eval
@@ -284,3 +292,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; emacs-copy.el ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

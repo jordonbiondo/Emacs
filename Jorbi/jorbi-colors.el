@@ -78,7 +78,10 @@
      (mode-line-inactive ((t (:background "cornsilk4"))))
      (font-lock-variable-name-face ((t (:foreground "#baba36"))))
      (minibuffer-prompt ((t (:foreground "#fffe0a" :bold t))))
-     (eshell-prompt ((t (:foreground  "#5180b3"))))
+     (eshell-ls-directory((t (:foreground "#5180b3"))))
+     (eshell-ls-product ((t (:foreground "#9b55c3"))))
+     (eshell-ls-backup ((t (:foreground "#454545"))))
+     (eshell-ls-executable ((t (:foreground "#6aaf50"))))
      (font-lock-warning-face ((t (:foreground "red" :bold t))))
      (trailing-whitespace ((t (:background "white" :bold t)))))))
 
