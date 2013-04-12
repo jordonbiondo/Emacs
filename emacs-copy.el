@@ -153,6 +153,12 @@
 ;;		 )
 ;;)
 
+
+
+;; magit
+(require 'magit)
+
+;; auto complete
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories (jorbi-vendor "auto-complete-install/dict"))
 (ac-config-default)

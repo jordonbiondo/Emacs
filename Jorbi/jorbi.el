@@ -72,6 +72,8 @@
   (turn-off 'scroll-bar-mode)
   ;; no menu bar
   (turn-off 'menu-bar-mode)
+  ;; ido-mode
+  (turn-on 'ido-mode)
   ;; show parenthesis matching
   (show-paren-mode 1)
   ;; highlight current line
@@ -128,6 +130,9 @@
 
   ;; run simple compile
   (global-set-key (kbd "C-x b") 'jorbi-simple-compile)
+
+  ;; magit status
+  (global-set-key (kbd "C-x m") 'magit-status)
 
   ;; run makefile
   (global-set-key (kbd "C-x n") 'jorbi-make)
