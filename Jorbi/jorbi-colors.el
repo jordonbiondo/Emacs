@@ -78,6 +78,7 @@
      (mode-line-inactive ((t (:background "cornsilk4"))))
      (font-lock-variable-name-face ((t (:foreground "#baba36"))))
      (minibuffer-prompt ((t (:foreground "#fffe0a" :bold t))))
+     (eshell-prompt ((t (:foreground  "#5180b3"))))
      (font-lock-warning-face ((t (:foreground "red" :bold t))))
      (trailing-whitespace ((t (:background "white" :bold t)))))))
 
