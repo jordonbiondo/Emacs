@@ -168,4 +168,9 @@
 ;;
 ;;  Steve, change this to your liking
 ;;
-(set-face-attribute 'default nil :height 120)
+
+(mac-eval
+ (set-face-attribute 'default nil :height 100))
+
+(linux-eval
+ (set-face-attribute 'default nil :height 90))
