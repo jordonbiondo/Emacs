@@ -60,9 +60,12 @@
       (foreground-color . "#bdbdb3")
       (mouse-color . "black"))
      (fringe ((t (:background "#1f1f1f"))))
+
      (mode-line-inactive ((t (:foreground "#191919" :background "cornsilk4"))))
      (mode-line ((t (:foreground "#191919" :background "cornsilk3"))))
+
      (region ((t (:background "#303030"))))
+
      (font-lock-builtin-face ((t (:foreground "#528fd1"))))
      (font-lock-comment-face ((t (:foreground "#454545"))))
      ;;(font-lock-comment-face ((t (:foreground "gray60"))))
@@ -72,17 +75,28 @@
      (font-lock-preprocessor-face ((t (:foreground "#FF8512"))))
      (font-lock-type-face ((t (:foreground"#cd5542"))))
      (font-lock-constant-face ((t (:foreground "#9b55c3"))))
+     (font-lock-warning-face ((t (:foreground "red" :bold t))))
+
      (mode-line ((t (:background "#454545"))))
      ;;(hl-line ((t (:background "gray15"))))
      (hl-line ((t (:background "#1f1f1f"))))
      (mode-line-inactive ((t (:background "cornsilk4"))))
      (font-lock-variable-name-face ((t (:foreground "#baba36"))))
      (minibuffer-prompt ((t (:foreground "#fffe0a" :bold t))))
+
+     ;; eshell
      (eshell-ls-directory((t (:foreground "#5180b3"))))
      (eshell-ls-product ((t (:foreground "#9b55c3"))))
      (eshell-ls-backup ((t (:foreground "#454545"))))
      (eshell-ls-executable ((t (:foreground "#6aaf50"))))
-     (font-lock-warning-face ((t (:foreground "red" :bold t))))
+
+     ;; erc
+     (erc-nick-default-face ((t (:foreground "#5180b3"))))
+     (erc-notice-face ((t (:foreground "#6aaf50"))))
+     (erc-input-face ((t (:foreground "white"))))
+     (erc-timestamp-face ((t (:foreground "#454545"))))
+     (erc-prompt-face ((t (:foreground "#191919" :background "#9b55c3"))))
+
      (trailing-whitespace ((t (:background "white" :bold t)))))))
 
 
