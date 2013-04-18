@@ -126,7 +126,7 @@
   (interactive)
 
   ;; open the buffer menu
-  (global-set-key (kbd "C-x l") 'buffer-menu)
+  (global-set-key (kbd "C-x l") 'ibuffer)
 
   ;; run simple compile
   (global-set-key (kbd "C-x b") 'jorbi-simple-compile)
