@@ -104,6 +104,8 @@
      (magit-log-sha1 ((t (:foreground "#9b55c3"))))
      (magit-item-highlight ((t (:foreground nil :background "#162433"))))
 
+     (error ((t (:foreground "red"))))
+
      (trailing-whitespace ((t (:background "white" :bold t)))))))
 
 
