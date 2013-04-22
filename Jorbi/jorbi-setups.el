@@ -61,7 +61,7 @@
 
 (require 'mathematica-setup)
 
-
+(require 'ibuffer-setup)
 
 (provide 'jorbi-setups)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
