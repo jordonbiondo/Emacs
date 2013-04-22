@@ -97,6 +97,13 @@
      (erc-timestamp-face ((t (:foreground "#454545"))))
      (erc-prompt-face ((t (:foreground "#191919" :background "#9b55c3"))))
 
+     ;; Magit
+     (magit-branch ((t (:foreground "#FF8512"))))
+     (magit-header ((t (:foreground "#5180b3"))))
+     (magit-section-title ((t (:foreground "#5180b3"))))
+     (magit-log-sha1 ((t (:foreground "#9b55c3"))))
+     (magit-item-highlight ((t (:foreground nil :background "#162433"))))
+
      (trailing-whitespace ((t (:background "white" :bold t)))))))
 
 
