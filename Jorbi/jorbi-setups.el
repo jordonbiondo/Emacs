@@ -1,11 +1,11 @@
 ;;; jorbi-setups.el --- require all my custom stuff
-;; 
+;;
 ;; Filename: jorbi-setups.el
-;; Description: 
+;; Description:
 ;; Author: Jordon Biondo
-;; Maintainer: 
+;; Maintainer:
 ;; Created: Fri Apr 12 18:22:01 2013 (-0400)
-;; Version: 
+;; Version:
 ;; Last-Updated: Fri Apr 12 18:22:13 2013 (-0400)
 ;;           By: Jordon Biondo
 ;;     Update #: 2
@@ -57,6 +57,9 @@
 
 (require 'package-setup)
 
+(require 'org-setup)
+
+(require 'mathematica-setup)
 
 
 
