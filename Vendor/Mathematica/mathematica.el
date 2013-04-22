@@ -391,11 +391,12 @@ part of an interrupt message." )
   (setq buffer-read-only t)
   )
 
-(defun mathematica-mode ()
+(define-derived-mode mathematica-mode prog-mode
   "Major mode for editing Mathematica plain text files (.m) in Emacs.
 Commands:
 \\{mathematica-mode-map}"
-  (interactive)
+  :syntax-table mathematica-mode-syntax-table
+;;  (interactive)
   (kill-all-local-variables)
 
   (use-local-map mathematica-mode-map)
