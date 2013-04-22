@@ -47,54 +47,6 @@
 ;;; Code:
 
 
-;;; emacs-copy.el ---
-;;
-;; Filename: emacs-copy.el
-;; Description:
-;; Author: Jordon Biondo
-;; Maintainer:
-;; Created: Fri Apr 12 12:22:07 2013 (-0400)
-;; Version:
-;; Last-Updated:
-;;           By:
-;;     Update #: 0
-;; URL:
-;; Doc URL:
-;; Keywords:
-;; Compatibility:
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;; Commentary:
-;;
-;;
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;; Change Log:
-;;
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 3, or
-;; (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-;; General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; see the file COPYING.  If not, write to
-;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
-;; Floor, Boston, MA 02110-1301, USA.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;; Code:
-
 
 ;; Require std cl libs
 (if (and (>= emacs-major-version 24) (>= emacs-minor-version 3))
@@ -110,10 +62,19 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
- '(initial-scratch-message ";;scratch")
+ '(initial-scratch-message nil)
  '(send-mail-function (quote smtpmail-send-it)))
 
 
+;; Emacs scratch info
+(add-hook 'after-init-hook
+	  (lambda()
+	    (switch-to-buffer "*scratch*")
+	    (end-of-buffer)
+	    (insert (concat ";; emacs      |  " (number-to-string emacs-major-version) "."
+			    (number-to-string emacs-minor-version) "\n;;\n"))
+	    (insert (concat ";; welcome    |  " (format-time-string "%A, %B %e, %Y | %-I:%M %p") "\n"))
+	    (insert (concat ";; init time  |  " (emacs-init-time) "\n\n"))))
 
 
 
@@ -199,6 +160,10 @@
 ;; SimpleGV Mode
 (autoload 'simplegv-mode "simplegv-mode" "SimpleGV" nil)
 (add-to-list 'auto-mode-alist '("\\.jlt\\'" . simplegv-mode))
+
+
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 ;; Mars Functions
 (autoload 'mars-init "mars" "Mars" nil)
@@ -289,12 +254,3 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; emacs-copy.el ends here
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; emacs-copy.el ends here
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
