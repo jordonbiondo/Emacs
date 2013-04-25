@@ -63,7 +63,7 @@
 		(progn
 		  (insert "\n")
 		  (insert-image img)
-		  ;; insert a . so `delete-trailing-whitespace' doesn't remove iamge
+		  ;; insert a . so `delete-trailing-whitespace' doesn't remove the image
 		  (insert "."))
 	      (print "File does not exist, try exporting somewhere specific")))))))
 
