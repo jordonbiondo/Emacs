@@ -69,6 +69,8 @@
 ;; Emacs scratch info
 (add-hook 'after-init-hook
 	  (lambda()
+
+	    ;; scratch setup
 	    (switch-to-buffer "*scratch*")
 	    (end-of-buffer)
 	    (insert (concat ";; emacs      |  " (number-to-string emacs-major-version) "."
@@ -162,7 +164,7 @@
 (add-to-list 'auto-mode-alist '("\\.jlt\\'" . simplegv-mode))
 
 
-(require 'org-bullets)
+(autoload 'org-bullets-mode "org bullets" "org bullets" nil)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 ;; Mars Functions
