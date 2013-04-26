@@ -90,6 +90,9 @@
      (eshell-ls-backup ((t (:foreground "#454545"))))
      (eshell-ls-executable ((t (:foreground "#6aaf50"))))
 
+     ;; shell
+     (comint-highlight-prompt ((t (:foreground "#6aaf50"))))
+
      ;; erc
      (erc-nick-default-face ((t (:foreground "#5180b3"))))
      (erc-notice-face ((t (:foreground "#6aaf50"))))
@@ -104,13 +107,17 @@
      (magit-log-sha1 ((t (:foreground "#9b55c3"))))
      (magit-item-highlight ((t (:foreground nil :background "#162433"))))
 
+
+     ;; error
      (error ((t (:foreground "red"))))
 
+     ;; ido
      (ido-only-match ((t (:foreground "#6aaf50"))))
      (ido-first-match ((t (:foreground "#5180b3"))))
      (ido-incomplete-regexp ((t (:foreground "#cd5542"))))
      (ido-subdir ((t (:foreground "#baba36"))))
 
+     ;; trailing whitespace
      (trailing-whitespace ((t (:background "white" :bold t)))))))
 
 
