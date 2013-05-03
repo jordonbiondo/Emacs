@@ -162,9 +162,9 @@
     ;; navigation keys
     (require 'jorbi-navigation)
     (global-set-key (kbd "<C-tab>") 'quick-indent)
-    (global-set-key (kbd "C-n") 'next-line-remove-whitespace)
-    (global-set-key (kbd "C-p") 'previous-line-remove-whitespace)
-    (global-set-key (kbd "RET") 'newline-remove-whitespace)
+    ;;(global-set-key (kbd "C-n") 'next-line-remove-whitespace)
+    ;;(global-set-key (kbd "C-p") 'previous-line-remove-whitespace)
+    ;;(global-set-key (kbd "RET") 'newline-remove-whitespace)
 
     ;; doc comment macro
     (global-set-key (kbd "C-M-k") 'jorbi-doc-comment-macro)
