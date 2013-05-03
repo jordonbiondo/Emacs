@@ -1,14 +1,14 @@
-;;; jorbi-setups.el --- require all my custom stuff
+;;; mc-setup.el ---
 ;;
-;; Filename: jorbi-setups.el
+;; Filename: mc-setup.el
 ;; Description:
 ;; Author: Jordon Biondo
 ;; Maintainer:
-;; Created: Fri Apr 12 18:22:01 2013 (-0400)
+;; Created: Thu May  2 21:09:42 2013 (-0400)
 ;; Version:
-;; Last-Updated: Fri Apr 12 18:22:13 2013 (-0400)
+;; Last-Updated: Thu May  2 21:09:46 2013 (-0400)
 ;;           By: Jordon Biondo
-;;     Update #: 2
+;;     Update #: 1
 ;; URL:
 ;; Doc URL:
 ;; Keywords:
@@ -46,26 +46,11 @@
 ;;
 ;;; Code:
 
+(require 'multiple-cursors)
 
+(global-set-key (kbd "C-s-.") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-s-,") 'mc/unmark-previous-like-this)
 
-
-(require 'eshell-setup)
-
-(require 'erc-setup)
-
-(require 'ruby-setup)
-
-(require 'package-setup)
-
-(require 'org-setup)
-
-(require 'mathematica-setup)
-
-(require 'ibuffer-setup)
-
-(require 'mc-setup)
-
-;; provide
-(provide 'jorbi-setups)
+(provide 'mc-setup)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; jorbi-setups.el ends here
+;;; mc-setup.el ends here
