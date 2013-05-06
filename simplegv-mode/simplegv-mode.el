@@ -1,3 +1,4 @@
+
 ;;; simplegv-mode.el --- editing mode of JLSCircuitTester files
 ;; 
 ;; Filename: simplegv-mode.el
@@ -6,9 +7,9 @@
 ;; Maintainer: Jordon Biondo biondoj@mail.gvsu.edu
 ;; Created: Sun Feb 10 12:54:49 2013 (-0500)
 ;; Version: 0.1.2
-;; Last-Updated: Tue Feb 12 17:57:00 2013 (-0500)
+;; Last-Updated: Sat Feb 16 10:09:44 2013 (-0500)
 ;;           By: Jordon Biondo
-;;     Update #: 12
+;;     Update #: 13
 ;; URL: www.github.com/jordonbiondo/simplegv-mode
 ;; Doc URL:
 ;; Keywords: extension, convinience
@@ -83,7 +84,7 @@
     (,(concat (regexp-opt simplegv-builtins 'words) "\\((\\)") 1 font-lock-builtin-face t);; builtin
     ("^[ \t]*#> *InputSetLoader:" 0 font-lock-preprocessor-face t);; set loader preprocessor
     ("^#> *InputSetLoader: *" "[a-zA-Z_]+\\.[a-zA-Z_]+" nil nil ( 0 font-lock-constant-face t));; set loader name
-    ("\\<BEGIN *" "\\<[a-zA-Z_]+\\>" nil nil (0 font-lock-function-name-face));; tests
+    ("\\<BEGIN *" "\\<[a-zA-Z_0-9]+\\>" nil nil (0 font-lock-function-name-face));; tests
     ("\\<OUTPUT_SET_TYPE  *\\(SHARED \\)? *" "\\<[a-zA-Z_]+\\>" nil nil (0 font-lock-type-face));; output set type
     ;;("someNumbers\\|moreNumbers" . font-lock-variable-name-face)
     ;;("NAMED_VALUE_LISTS *\n.*" "\\<[a-zA-Z_]+\\>" nil nil (0 font-lock-variable-name-face)) broken
@@ -94,12 +95,46 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Simplegv tab width.
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defvar simplegv-tab-width 4
+(defvar simplegv-tab-width 3
   "Tab width to be used for simplegv-mode: default is 2.")
 
 		  
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; simplegv-indent-line
+;; new-simplegv-indent-line
+;; prototype for new indentation scheme
+;; Indents lines according to simplegv format
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun new-simplegv-indent-line() 
+  "Indent current line according to simplegv format"
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (if (bobp)
+	(indent-line-to 0)
+      (progn
+	(back-to-indentation)
+	(if (looking-at "\\(BEGIN\\|OUTPUT_SET_TYPE\\|NAMED_VALUE_LISTS\\)")
+	    (indent-line-to 0)
+	  (let ((found-base nil) new-indent)
+	    (save-excursion
+	      (while (not found-base)
+		(progn
+		  (forward-line -1)
+		  (back-to-indentation)
+		  (cond 
+		   ((looking-at (regexp-opt simplegv-keywords)) 		    
+		    (progn
+		      (setq new-indent (+ simplegv-tab-width  (current-indentation)))
+		      (setq found-base t)))
+		   ((bobp)
+		    (progn
+		      (setq new-indent 0)
+		      (setq found-base t)))))))
+	    (indent-line-to new-indent)))))))
+
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; new-simplegv-indent-line
 ;; Indents lines according to simplegv format
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun simplegv-indent-line()
@@ -197,9 +232,7 @@
 	;; auto-complete keyword list
 	;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	(defvar simplegv-ac-keyword-list
-	  (append simplegv-keywords
-		  (append simplegv-constants
-			  (append simplegv-types simplegv-builtins)))
+	  (append simplegv-keywords simplegv-constants simplegv-types simplegv-builtins)
 	  "Complete list of keywords for auto-completion.")
 	
 	;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
