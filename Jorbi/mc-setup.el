@@ -47,9 +47,13 @@
 ;;; Code:
 
 (require 'multiple-cursors)
+(linux-eval
+ (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+ (global-set-key (kbd "C-<") 'mc/unmark-previous-like-this))
 
-(global-set-key (kbd "C-s-.") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-s-,") 'mc/unmark-previous-like-this)
+(mac-eval
+ (global-set-key (kbd "C-s-.") 'mc/mark-next-like-this)
+ (global-set-key (kbd "C-s-,") 'mc/unmark-previous-like-this))
 
 (provide 'mc-setup)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
