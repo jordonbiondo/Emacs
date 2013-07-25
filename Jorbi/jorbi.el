@@ -97,7 +97,10 @@
 
 (defun jorbi-terminal-settings()
   "Custom settings for running in terminal"
-  (jorbi-term-colors)
+  (interactive)
+  ;;(jorbi-term-colors)
+  (jorbi-cool)
+  (set-face-foreground 'font-lock-comment-face "red1")
   (global-hl-line-mode 0))
 
 
