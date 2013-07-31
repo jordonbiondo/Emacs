@@ -132,7 +132,9 @@
   (global-set-key (kbd "C-x l") 'ibuffer)
 
   ;; run simple compile
-  (global-set-key (kbd "C-x b") 'jorbi-simple-compile)
+  (global-set-key (kbd "C-x b") 'ido-switch-buffer)
+
+  (global-set-key (kbd "C-c SPC") 'ace-jump-mode)
 
   ;; magit status
   (global-set-key (kbd "C-x m") 'magit-status)
@@ -229,7 +231,7 @@
   (interactive)
   (mac-eval
    (if (not (string-match "/usr/local/bin" (getenv "PATH")))
-       (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+       (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin/"))
      (print "/usr/local/bin is already set up"))
    (if (not (string-match "/sw/bin" (getenv "PATH")))
        (setenv "PATH" (concat (getenv "PATH") ":/sw/bin"))
@@ -239,3 +241,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; jorbi.el ends here
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin/"))
+
+(setq magit-git-executable "/usr/local/bin/git")
