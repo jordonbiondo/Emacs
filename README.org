@@ -1,10 +1,2 @@
-* Emacs Configuration
-  This is my personal Emacs configuration
-  - Currently running on Emacs 24.3.1
-  - Compatable with 23+ (tested in Aquamacs)
-  - The config isn't .emacs.d ready, the .emacs copy assumes this repo is in ~/Git/ and modifies the load-path accordingly.
-
-
-
-
-
+* Old Emacs Configuration
+  This is my old emacs configuration, goto https://github.com/jordonbiondo/.emacs.d for my updated config
