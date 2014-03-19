@@ -1,2 +1,2 @@
 * Old Emacs Configuration
-  This is my old emacs configuration, goto https://github.com/jordonbiondo/.emacs.d for my updated config
+  This is my old emacs configuration it's pretty awful, goto https://github.com/jordonbiondo/.emacs.d for my updated config
